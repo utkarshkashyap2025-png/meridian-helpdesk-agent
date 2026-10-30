@@ -1,16 +1,44 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { useAuth, useClerk } from '@clerk/react';
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
 import ChatPage from './pages/ChatPage';
+import TicketsPage from './pages/TicketsPage';
 import HRPoliciesPage from './pages/HRPoliciesPage';
 import ITSupportPage from './pages/ITSupportPage';
+import RaiseTicketModal from './components/RaiseTicketModal';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('chat');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isConfigModalOpen, setIsConfigModalOpen] = useState(false);
+  const [isRaiseTicketModalOpen, setIsRaiseTicketModalOpen] = useState(false);
+  const [ticketModalDefaults, setTicketModalDefaults] = useState({
+    category: 'IT Hardware',
+    subject: '',
+    description: ''
+  });
   const [pendingQuestion, setPendingQuestion] = useState(null);
   const [toasts, setToasts] = useState([]);
+
+  const { isSignedIn, isLoaded } = useAuth();
+  const clerk = useClerk();
+  const hasPromptedSignIn = useRef(false);
+
+  // Automatically pop up sign in when opening the project if not signed in
+  useEffect(() => {
+    if (isLoaded && !isSignedIn && !hasPromptedSignIn.current) {
+      hasPromptedSignIn.current = true;
+      const timer = setTimeout(() => {
+        try {
+          clerk.openSignIn();
+        } catch (e) {
+          console.error('Failed to open sign-in modal on start:', e);
+        }
+      }, 300);
+      return () => clearTimeout(timer);
+    }
+  }, [isLoaded, isSignedIn, clerk]);
 
   const showToast = (message, type = 'info') => {
     const id = Date.now() + Math.random();
@@ -22,8 +50,27 @@ export default function App() {
   };
 
   const handleAskBot = (question) => {
+    if (!isSignedIn) {
+      showToast('Please sign in to chat with the Helpdesk AI Assistant', 'warning');
+      clerk.openSignIn();
+      return;
+    }
     setActiveTab('chat');
     setPendingQuestion(question);
+  };
+
+  const handleOpenRaiseTicket = (defaults = {}) => {
+    if (!isSignedIn) {
+      showToast('Please sign in to raise a support ticket', 'warning');
+      clerk.openSignIn();
+      return;
+    }
+    setTicketModalDefaults({
+      category: defaults.category || 'IT Hardware',
+      subject: defaults.subject || '',
+      description: defaults.description || ''
+    });
+    setIsRaiseTicketModalOpen(true);
   };
 
   return (
@@ -31,16 +78,17 @@ export default function App() {
       {/* Top Header */}
       <Header
         onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
-        onNavigateTab={(tab) => setActiveTab(tab === 'tickets' ? 'chat' : tab)}
+        onNavigateTab={(tab) => setActiveTab(tab)}
         onAskBot={handleAskBot}
         onOpenConfig={() => setIsConfigModalOpen(true)}
+        onOpenRaiseTicket={() => handleOpenRaiseTicket()}
       />
 
       <div className="app-body">
         {/* Left Navigation Sidebar */}
         <Sidebar
-          activeTab={activeTab === 'tickets' ? 'chat' : activeTab}
-          onSelectTab={(tab) => setActiveTab(tab === 'tickets' ? 'chat' : tab)}
+          activeTab={activeTab}
+          onSelectTab={(tab) => setActiveTab(tab)}
           isOpen={isSidebarOpen}
           onCloseMobile={() => setIsSidebarOpen(false)}
           onOpenConfig={() => setIsConfigModalOpen(true)}
@@ -50,10 +98,19 @@ export default function App() {
         <main className="main-viewport" role="main">
           {activeTab === 'chat' && (
             <ChatPage
-              onNavigateTab={(tab) => setActiveTab(tab === 'tickets' ? 'chat' : tab)}
+              onNavigateTab={(tab) => setActiveTab(tab)}
               onOpenConfig={() => setIsConfigModalOpen(true)}
+              onOpenRaiseTicket={handleOpenRaiseTicket}
               pendingQuestion={pendingQuestion}
               onClearPendingQuestion={() => setPendingQuestion(null)}
+            />
+          )}
+
+          {activeTab === 'tickets' && (
+            <TicketsPage
+              onOpenRaiseTicket={handleOpenRaiseTicket}
+              onAskBot={handleAskBot}
+              onShowToast={showToast}
             />
           )}
 
@@ -65,10 +122,23 @@ export default function App() {
           )}
 
           {activeTab === 'it-support' && (
-            <ITSupportPage onShowToast={showToast} />
+            <ITSupportPage
+              onShowToast={showToast}
+              onOpenRaiseTicket={handleOpenRaiseTicket}
+            />
           )}
         </main>
       </div>
+
+      {/* Raise Support Ticket Modal — Accesses Employee Details via Clerk */}
+      <RaiseTicketModal
+        isOpen={isRaiseTicketModalOpen}
+        onClose={() => setIsRaiseTicketModalOpen(false)}
+        initialCategory={ticketModalDefaults.category}
+        initialSubject={ticketModalDefaults.subject}
+        initialDescription={ticketModalDefaults.description}
+        onShowToast={showToast}
+      />
 
       {/* Configuration Guide Modal for n8n */}
       {isConfigModalOpen && (

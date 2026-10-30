@@ -447,3 +447,50 @@
     max-width: none;
   }
 }
+
+
+/* Clerk Auth Controls */
+.header-auth-buttons {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.header-auth-btn {
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  border: none;
+}
+
+.header-sign-in-btn {
+  background: rgba(255, 255, 255, 0.15);
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.header-sign-in-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.header-sign-up-btn {
+  background: #FFFFFF;
+  color: var(--teams-purple, #4b53bc);
+}
+
+.header-sign-up-btn:hover {
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.header-user-btn-wrap {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  padding: 2px 6px;
+}

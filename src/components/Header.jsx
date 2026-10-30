@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Search, Settings, ChevronDown, Menu } from 'lucide-react';
+import { Search, Settings, ChevronDown, Menu, Ticket } from 'lucide-react';
 import { OFFICIAL_POLICIES } from '../data/policies.js';
+import { SignInButton, SignUpButton, Show, UserButton, useAuth, useClerk } from '@clerk/react';
 import meridianLogo from '../assets/meridian-logo.svg';
 
 const IT_CATALOG_ITEMS = [
@@ -25,22 +26,20 @@ export default function Header({
   onToggleSidebar, 
   onNavigateTab, 
   onAskBot, 
-  onOpenConfig 
+  onOpenConfig,
+  onOpenRaiseTicket
 }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [showSearchResults, setShowSearchResults] = useState(false);
-  const [showProfileCard, setShowProfileCard] = useState(false);
   const searchRef = useRef(null);
-  const profileRef = useRef(null);
+  const { isSignedIn } = useAuth();
+  const clerk = useClerk();
 
   // Close dropdowns on outside click
   useEffect(() => {
     function handleClickOutside(e) {
       if (searchRef.current && !searchRef.current.contains(e.target)) {
         setShowSearchResults(false);
-      }
-      if (profileRef.current && !profileRef.current.contains(e.target)) {
-        setShowProfileCard(false);
       }
     }
     document.addEventListener('mousedown', handleClickOutside);
@@ -63,6 +62,9 @@ export default function Header({
   };
 
   const handleSelectResult = (item) => {
+    if (item.tab === 'chat' && !isSignedIn) {
+      clerk.openSignIn();
+    }
     onNavigateTab(item.tab);
     setSearchQuery('');
     setShowSearchResults(false);
@@ -102,27 +104,29 @@ export default function Header({
               setSearchQuery(e.target.value);
               setShowSearchResults(true);
             }}
-            onFocus={() => setShowSearchResults(Boolean(searchQuery.trim()))}
+            onFocus={() => setShowSearchResults(true)}
             onKeyDown={handleSearchSubmit}
-            autoComplete="off"
+            aria-label="Universal Helpdesk Search"
           />
           <span className="search-kbd-shortcut">↵ Enter</span>
         </div>
 
-        {/* Search Results Dropdown */}
-        {showSearchResults && (
+        {/* Live Search Suggestion Dropdown */}
+        {showSearchResults && searchQuery.trim() && (
           <div className="search-results-dropdown active">
+            <div className="search-results-header">
+              <span>Suggestions & Knowledge Base</span>
+            </div>
             {searchMatches.length > 0 ? (
               <>
-                <div className="search-group-title">Helpdesk Resources</div>
-                {searchMatches.map((m, idx) => (
+                {searchMatches.slice(0, 6).map((m, idx) => (
                   <div
                     key={idx}
                     className="search-result-item"
                     onClick={() => handleSelectResult(m)}
                   >
                     <div className="search-result-icon">
-                      {m.tab === 'hr-policies' ? '📜' : '🛠️'}
+                      {m.tab === 'hr-policies' ? '📜' : '💻'}
                     </div>
                     <div className="search-result-meta">
                       <span className="search-result-title">{m.title}</span>
@@ -147,6 +151,23 @@ export default function Header({
           <span>Systems Normal</span>
         </div>
 
+        {/* Raise Ticket Button */}
+        <button
+          className="header-raise-ticket-btn"
+          id="btn-raise-ticket-header"
+          title="Raise a Support Ticket with your Clerk account details"
+          onClick={() => {
+            if (!isSignedIn) {
+              clerk.openSignIn();
+              return;
+            }
+            onOpenRaiseTicket && onOpenRaiseTicket();
+          }}
+        >
+          <Ticket size={14} />
+          <span>Raise Ticket</span>
+        </button>
+
         <button
           className="header-icon-btn"
           id="btn-open-config"
@@ -157,56 +178,34 @@ export default function Header({
           <Settings size={18} />
         </button>
 
-        {/* User Profile Chip */}
-        <div
-          className="user-profile-chip"
-          id="user-profile-chip"
-          ref={profileRef}
-          onClick={() => setShowProfileCard(!showProfileCard)}
-          title="Alex Morgan - Product & Systems"
-        >
-          <div className="user-avatar-wrap">
-            <span>AM</span>
-            <span className="presence-indicator" title="Available"></span>
+        {/* User Auth Controls */}
+        <Show when="signed-out">
+          <div className="header-auth-buttons">
+            <SignInButton mode="modal">
+              <button className="header-auth-btn header-sign-in-btn">Sign In</button>
+            </SignInButton>
+            <SignUpButton mode="modal">
+              <button className="header-auth-btn header-sign-up-btn">Sign Up</button>
+            </SignUpButton>
           </div>
-          <span className="user-name-label">Alex Morgan</span>
-          <ChevronDown size={14} />
+        </Show>
 
-          {/* Profile Popover Card */}
-          {showProfileCard && (
-            <div className="profile-dropdown-card active" onClick={(e) => e.stopPropagation()}>
-              <div className="profile-card-header">
-                <div className="profile-card-avatar">AM</div>
-                <div className="profile-card-info">
-                  <h4>Alex Morgan</h4>
-                  <p>alex.morgan@meridian.corp</p>
-                  <span className="profile-card-tag">Engineering & Design</span>
-                </div>
-              </div>
-              <div className="profile-card-details">
-                <div className="profile-detail-row">
-                  <span>Employee ID</span>
-                  <strong>MRD-84291</strong>
-                </div>
-                <div className="profile-detail-row">
-                  <span>Location</span>
-                  <strong>Seattle, WA (Remote)</strong>
-                </div>
-                <div className="profile-detail-row">
-                  <span>Assigned IT Lead</span>
-                  <strong>Marcus Vance</strong>
-                </div>
-                <div className="profile-detail-row">
-                  <span>Presence</span>
-                  <span style={{ color: '#107C41', fontWeight: 600 }}>● Available</span>
-                </div>
-              </div>
-              <div className="profile-card-footer">
-                UI Profile Placeholder — Meridian Internal SSO
-              </div>
-            </div>
-          )}
-        </div>
+        <Show when="signed-in">
+          <div className="header-user-btn-wrap">
+            <UserButton
+              showName
+              appearance={{
+                elements: {
+                  userButtonOuterIdentifier: {
+                    color: '#ffffff',
+                    fontWeight: 600,
+                    fontSize: '13px'
+                  }
+                }
+              }}
+            />
+          </div>
+        </Show>
       </div>
     </header>
   );

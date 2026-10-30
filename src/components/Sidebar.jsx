@@ -1,5 +1,5 @@
 import React from 'react';
-import { MessageSquare, FileText, Wrench, HelpCircle } from 'lucide-react';
+import { MessageSquare, Ticket, FileText, Wrench, HelpCircle } from 'lucide-react';
 import meridianLogo from '../assets/meridian-logo.svg';
 
 export default function Sidebar({ activeTab, onSelectTab, isOpen, onCloseMobile, onOpenConfig }) {
@@ -9,6 +9,13 @@ export default function Sidebar({ activeTab, onSelectTab, isOpen, onCloseMobile,
       label: 'Chat',
       tooltip: 'AI Helpdesk Chat',
       icon: MessageSquare,
+      badge: null
+    },
+    {
+      id: 'tickets',
+      label: 'My Tickets',
+      tooltip: 'Support Tickets & Requests',
+      icon: Ticket,
       badge: null
     },
     {
@@ -58,8 +65,9 @@ export default function Sidebar({ activeTab, onSelectTab, isOpen, onCloseMobile,
                     onSelectTab(item.id);
                     onCloseMobile();
                   }}
-                  data-tooltip={item.tooltip}
+                  title={item.tooltip}
                   aria-label={item.label}
+                  aria-current={isActive ? 'page' : undefined}
                 >
                   <div className="nav-icon-wrap">
                     <Icon size={20} />
@@ -69,32 +77,35 @@ export default function Sidebar({ activeTab, onSelectTab, isOpen, onCloseMobile,
                       </span>
                     )}
                   </div>
-                  <span className="nav-label">{item.label}</span>
+                  <span className="nav-label-text">{item.label}</span>
                 </button>
               </li>
             );
           })}
         </ul>
 
-        {/* Bottom Sidebar Utilities */}
-        <div className="sidebar-bottom-tools">
+        {/* Bottom System & Config Strip */}
+        <div className="sidebar-footer">
           <button
-            className="sidebar-tool-btn"
-            id="sidebar-help-btn"
-            data-tooltip="n8n Connection Guide"
-            aria-label="Help & Configuration"
+            className="sidebar-footer-btn"
+            title="Configure n8n Chatbot Webhook"
+            aria-label="Open Configuration Guide"
             onClick={onOpenConfig}
           >
-            <HelpCircle size={19} />
+            <HelpCircle size={18} />
+            <span className="footer-btn-label">Help / Setup</span>
           </button>
         </div>
       </nav>
 
-      {/* Mobile Drawer Overlay */}
-      <div 
-        className={`sidebar-overlay ${isOpen ? 'active' : ''}`} 
-        onClick={onCloseMobile}
-      />
+      {/* Mobile Backdrop */}
+      {isOpen && (
+        <div
+          className="sidebar-backdrop active"
+          onClick={onCloseMobile}
+          aria-hidden="true"
+        />
+      )}
     </>
   );
 }

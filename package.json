@@ -10,6 +10,7 @@
     "sync-policies": "node scripts/process-policies.js"
   },
   "dependencies": {
+    "@clerk/react": "^6.18.3",
     "@n8n/chat": "^1.44.6",
     "lucide-react": "^1.64.0",
     "react": "^19.3.1",

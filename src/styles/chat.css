@@ -714,3 +714,279 @@
     padding: 10px 16px 14px 16px;
   }
 }
+
+
+/* Auth Lock Badge & Status */
+.welcome-badge-locked {
+  font-size: 11px;
+  font-weight: 600;
+  background: #FDF3F2;
+  color: #D13438;
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.welcome-badge-locked::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #D13438;
+}
+
+.chat-status-pill.locked {
+  border-color: #F8D0CD;
+  background: #FFF4F4;
+  color: #A80000;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.chat-status-pill.locked:hover {
+  background: #FFE8E8;
+  border-color: #D13438;
+}
+
+.locked-prompt-pill {
+  opacity: 0.85;
+  cursor: pointer;
+}
+
+.locked-prompt-pill:hover {
+  border-color: var(--teams-purple) !important;
+}
+
+/* Chat Authentication Gate Screen */
+.chat-auth-gate-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: linear-gradient(180deg, #F9F8FD 0%, #FFFFFF 100%);
+  width: 100%;
+  height: 100%;
+}
+
+.chat-auth-gate-card {
+  max-width: 540px;
+  width: 100%;
+  background: #FFFFFF;
+  border: 1px solid var(--border-light, #EDEBE9);
+  border-radius: 16px;
+  padding: 36px 32px;
+  box-shadow: 0 10px 30px rgba(91, 95, 199, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  animation: modalPop 0.3s ease-out;
+}
+
+.chat-auth-gate-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, rgba(91, 95, 199, 0.12), rgba(54, 209, 220, 0.15));
+  color: var(--teams-purple, #5B5FC7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 12px rgba(91, 95, 199, 0.15);
+}
+
+.chat-auth-gate-card h3 {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-primary, #242424);
+  margin-bottom: 10px;
+  letter-spacing: -0.2px;
+}
+
+.chat-auth-gate-card p {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-secondary, #616161);
+  margin-bottom: 24px;
+  max-width: 440px;
+}
+
+.chat-auth-gate-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.chat-auth-gate-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--teams-purple, #5B5FC7);
+  color: #FFFFFF;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 10px 22px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 6px rgba(91, 95, 199, 0.3);
+}
+
+.chat-auth-gate-btn-primary:hover {
+  background: var(--teams-purple-dark, #4f52b2);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(91, 95, 199, 0.4);
+}
+
+.chat-auth-gate-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  color: var(--teams-purple, #5B5FC7);
+  font-weight: 600;
+  font-size: 14px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: 1px solid var(--border-light, #EDEBE9);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.chat-auth-gate-btn-secondary:hover {
+  background: rgba(91, 95, 199, 0.06);
+  border-color: var(--teams-purple, #5B5FC7);
+}
+
+.chat-auth-gate-features {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  background: #F8F7FC;
+  border: 1px solid #ECE9F7;
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.gate-feature-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--text-primary, #323130);
+  font-weight: 500;
+}
+
+.chat-auth-gate-footer {
+  font-size: 11.5px;
+  color: #8A8886;
+}
+
+
+/* Clerk Synced Strip Above Chat */
+.chat-clerk-synced-strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 24px;
+  background: #F4FBF7;
+  border-bottom: 1px solid #D2EEDC;
+  font-size: 12.5px;
+  color: #107C41;
+  flex-shrink: 0;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.clerk-synced-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.clerk-synced-badge strong {
+  color: #0E6836;
+}
+
+.clerk-synced-badge code {
+  background: rgba(16, 124, 65, 0.1);
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-size: 11.5px;
+  color: #0E6836;
+}
+
+.clerk-synced-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-autofill-ticket-prompt {
+  display: inline-flex;
+  align-items: center;
+  background: #107C41;
+  color: #FFFFFF;
+  border: none;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  box-shadow: 0 1px 3px rgba(16, 124, 65, 0.2);
+}
+
+.btn-autofill-ticket-prompt:hover {
+  background: #0E6836;
+  transform: translateY(-1px);
+}
+
+.btn-open-ticket-modal-quick {
+  display: inline-flex;
+  align-items: center;
+  background: #FFFFFF;
+  color: #107C41;
+  border: 1px solid #A3E0BA;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-open-ticket-modal-quick:hover {
+  background: #EAF7EF;
+}
+
+.chat-btn-raise-ticket {
+  display: inline-flex;
+  align-items: center;
+  background: var(--teams-purple, #5B5FC7);
+  color: #FFFFFF;
+  border: none;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  box-shadow: 0 1px 3px rgba(91, 95, 199, 0.25);
+}
+
+.chat-btn-raise-ticket:hover {
+  background: var(--teams-purple-dark, #4f52b2);
+  transform: translateY(-1px);
+}

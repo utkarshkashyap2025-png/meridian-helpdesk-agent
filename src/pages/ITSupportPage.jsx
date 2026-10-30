@@ -71,7 +71,7 @@ const SOFTWARE_ITEMS = [
   }
 ];
 
-export default function ITSupportPage({ onShowToast }) {
+export default function ITSupportPage({ onShowToast, onOpenRaiseTicket }) {
   const [latencyText, setLatencyText] = useState('17ms (Optimal)');
   const [isPinging, setIsPinging] = useState(false);
 
@@ -88,17 +88,27 @@ export default function ITSupportPage({ onShowToast }) {
   };
 
   const handleRequestHardware = (title) => {
-    onShowToast(
-      `ℹ️ [Demonstration UI] Hardware request initiated for "${title}". In production, this generates a procurement task in your n8n workflow. No order was placed.`,
-      'info'
-    );
+    if (onOpenRaiseTicket) {
+      onOpenRaiseTicket({
+        category: 'IT Hardware',
+        subject: `Hardware Provisioning Request: ${title}`,
+        description: `Requesting enterprise hardware allocation for: ${title}. Please process for employee deployment.`
+      });
+    } else {
+      onShowToast(`Hardware request initiated for "${title}".`, 'info');
+    }
   };
 
   const handleRequestSoftware = (title) => {
-    onShowToast(
-      `ℹ️ [Demonstration UI] License provisioning request for "${title}". In production, Okta and n8n automate license assignment. No changes were made.`,
-      'info'
-    );
+    if (onOpenRaiseTicket) {
+      onOpenRaiseTicket({
+        category: 'IT Software',
+        subject: `Software License Provisioning: ${title}`,
+        description: `Requesting enterprise license seat assignment for: ${title}. Need access for project deliverables.`
+      });
+    } else {
+      onShowToast(`License provisioning request for "${title}".`, 'info');
+    }
   };
 
   return (
