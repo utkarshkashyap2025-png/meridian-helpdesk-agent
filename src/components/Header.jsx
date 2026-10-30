@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Search, Settings, ChevronDown, Menu } from 'lucide-react';
 import { OFFICIAL_POLICIES } from '../data/policies.js';
+import meridianLogo from '../assets/meridian-logo.svg';
 
 const IT_CATALOG_ITEMS = [
   { title: 'Apple MacBook Pro 16" (M3 Pro)', tab: 'it-support', category: 'IT Hardware' },
@@ -79,7 +80,7 @@ export default function Header({
           <Menu size={20} />
         </button>
         <div className="brand-logo-wrap">
-          <img src="/src/assets/meridian-logo.svg" alt="Meridian Logo" />
+          <img src={meridianLogo} alt="Meridian Logo" />
         </div>
         <div className="header-title-block">
           <h1 className="header-app-title">Meridian Employee Helpdesk</h1>

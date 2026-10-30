@@ -1,5 +1,6 @@
 import React from 'react';
 import { MessageSquare, FileText, Wrench, HelpCircle } from 'lucide-react';
+import meridianLogo from '../assets/meridian-logo.svg';
 
 export default function Sidebar({ activeTab, onSelectTab, isOpen, onCloseMobile, onOpenConfig }) {
   const navItems = [
@@ -39,7 +40,7 @@ export default function Sidebar({ activeTab, onSelectTab, isOpen, onCloseMobile,
             title="Meridian Helpdesk"
             onClick={() => onSelectTab('chat')}
           >
-            <img src="/src/assets/meridian-logo.svg" alt="Meridian Icon" />
+            <img src={meridianLogo} alt="Meridian Icon" />
           </div>
           <span className="sidebar-logo-label">Meridian</span>
         </div>
