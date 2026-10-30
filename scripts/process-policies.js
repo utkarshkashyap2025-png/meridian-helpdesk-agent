@@ -36,7 +36,6 @@ async function processPolicies() {
     console.log('👉 Place your official .docx files in: policies-source/');
     console.log('   Then run: npm run sync-policies');
     
-    // Keep OFFICIAL_POLICIES as empty array so no fake content is shown
     const emptyFileContent = `/**
  * Official Meridian Policies (Awaiting .docx Documents)
  * Place your official .docx policy files in: policies-source/
@@ -54,42 +53,40 @@ export const OFFICIAL_POLICIES = [];
     const filename = docxFiles[i];
     const filePath = path.join(SOURCE_DIR, filename);
 
-    // 1. Convert DOCX to clean semantic HTML
+    // 1. Convert DOCX to clean semantic HTML and raw text
     const htmlResult = await mammoth.convertToHtml({ path: filePath });
     const rawTextResult = await mammoth.extractRawText({ path: filePath });
 
     const htmlContent = htmlResult.value || '<p>Content unavailable.</p>';
     const rawText = rawTextResult.value || '';
+    const nonBlankLines = rawText.split('\n').map(l => l.trim()).filter(Boolean);
 
-    // 2. Derive Title (from first heading or clean filename)
+    // 2. Derive Title (prioritize document header lines for clean names)
     let title = '';
-    const headingMatch = htmlContent.match(/<h[1-3][^>]*>(.*?)<\/h[1-3]>/i);
-    if (headingMatch && headingMatch[1] && headingMatch[1].trim().length > 3) {
-      title = headingMatch[1].replace(/<[^>]+>/g, '').trim();
-    } else {
-      title = filename
-        .replace(/\.docx$/i, '')
-        .replace(/[-_]+/g, ' ')
-        .replace(/\b\w/g, l => l.toUpperCase())
-        .trim();
+    if (nonBlankLines.length > 0) {
+      if (nonBlankLines[0].toUpperCase() === 'MERIDIAN' && nonBlankLines.length > 1) {
+        title = nonBlankLines[1];
+      } else if (nonBlankLines[0].length > 5 && !nonBlankLines[0].includes('Document ID:')) {
+        title = nonBlankLines[0];
+      }
+    }
+
+    // Ensure title starts with "Meridian " cleanly
+    if (!title) {
+      title = filename.replace(/\.docx$/i, '').replace(/[-_]+/g, ' ').trim();
+    }
+    if (!title.toLowerCase().startsWith('meridian')) {
+      title = `Meridian ${title}`;
     }
 
     // 3. Derive Category (HR Policies vs IT Policies)
-    const lowerName = (filename + ' ' + title).toLowerCase();
+    const lowerTitle = title.toLowerCase();
     let category = 'hr';
     let categoryLabel = 'HR Policies';
 
-    if (
-      lowerName.includes('it ') ||
-      lowerName.includes('it faq') ||
-      lowerName.includes('laptop') ||
-      lowerName.includes('password') ||
-      lowerName.includes('software') ||
-      lowerName.includes('hardware') ||
-      lowerName.includes('security') ||
-      lowerName.includes('network') ||
-      lowerName.includes('vpn')
-    ) {
+    // Word boundary checks to avoid false positives (e.g., "exit" containing "it")
+    const isIT = /\b(it|it faq|laptop|password|software|hardware|security|network|vpn|data protection)\b/i.test(lowerTitle);
+    if (isIT) {
       category = 'it';
       categoryLabel = 'IT Policies';
     } else {
@@ -107,7 +104,7 @@ export const OFFICIAL_POLICIES = [];
         .split(/\n+/)
         .map(p => p.trim())
         .filter(p => p.length > 30 && !p.includes('Document ID:') && !p.includes('Version:') && !p.includes('Classification:'));
-      summary = paragraphs.length > 0 ? paragraphs[0] : filename.replace(/\.docx$/i, '');
+      summary = paragraphs.length > 0 ? paragraphs[0] : title;
     }
     if (summary.length > 220) {
       summary = summary.slice(0, 217) + '...';
@@ -121,14 +118,15 @@ export const OFFICIAL_POLICIES = [];
     const stats = fs.statSync(filePath);
     const updatedDate = stats.mtime.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
 
-    // 6. Copy original DOCX to public/policies/ for employee download
-    const publicFileName = filename;
-    fs.copyFileSync(filePath, path.join(PUBLIC_DIR, publicFileName));
+    // 6. Copy original DOCX to public/policies/ with friendly filename
+    const cleanPublicFileName = `${title.replace(/[\\/:*?"<>|]/g, '')}.docx`;
+    fs.copyFileSync(filePath, path.join(PUBLIC_DIR, cleanPublicFileName));
 
     policies.push({
       id: `DOC-${String(i + 1).padStart(2, '0')}`,
-      filename,
-      downloadUrl: `/policies/${encodeURIComponent(publicFileName)}`,
+      filename: cleanPublicFileName,
+      originalSourceFilename: filename,
+      downloadUrl: `/policies/${encodeURIComponent(cleanPublicFileName)}`,
       category,
       categoryLabel,
       title,
@@ -138,8 +136,11 @@ export const OFFICIAL_POLICIES = [];
       fullContent: htmlContent
     });
 
-    console.log(`✓ Processed: "${filename}" -> "${title}" (${categoryLabel})`);
+    console.log(`✓ Processed: "${filename}" -> "${title}" [${categoryLabel}]`);
   }
+
+  // Sort alphabetically by title
+  policies.sort((a, b) => a.title.localeCompare(b.title));
 
   // 7. Write to src/data/policies.js
   const fileContent = `/**
