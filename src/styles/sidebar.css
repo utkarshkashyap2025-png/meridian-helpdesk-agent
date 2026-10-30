@@ -1,0 +1,290 @@
+/* ==========================================================================
+   LEFT NAVIGATION SIDEBAR (TEAMS RAIL INSPIRATION)
+   ========================================================================== */
+
+.app-sidebar {
+  width: var(--rail-width);
+  background-color: var(--rail-bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 0 16px 0;
+  user-select: none;
+  flex-shrink: 0;
+  z-index: 90;
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), width 0.2s ease;
+}
+
+/* Sidebar Top Logo */
+.sidebar-logo-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.sidebar-logo-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #5B5FC7, #36D1DC);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(91, 95, 199, 0.35);
+  transition: transform 0.2s ease;
+  cursor: pointer;
+}
+
+.sidebar-logo-icon:hover {
+  transform: scale(1.05);
+}
+
+.sidebar-logo-icon img,
+.sidebar-logo-icon svg {
+  width: 26px;
+  height: 26px;
+}
+
+.sidebar-logo-label {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--rail-text);
+  margin-top: 4px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+
+/* Navigation List */
+.sidebar-nav-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-item-btn {
+  width: 100%;
+  height: 58px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  color: var(--rail-text);
+  position: relative;
+  transition: all 0.15s ease;
+  padding: 6px 0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.nav-item-btn:hover {
+  color: var(--rail-text-active);
+  background: var(--rail-item-hover);
+}
+
+.nav-item-btn.active {
+  color: var(--rail-text-active);
+  background: var(--rail-item-active);
+}
+
+/* Active indicator strip (Teams signature purple bar) */
+.nav-item-btn.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 10px;
+  bottom: 10px;
+  width: 3.5px;
+  background-color: var(--teams-purple);
+  border-radius: 0 3px 3px 0;
+}
+
+.nav-icon-wrap {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-icon-wrap svg {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+  transition: transform 0.15s ease;
+}
+
+.nav-item-btn:hover .nav-icon-wrap svg {
+  transform: scale(1.1);
+}
+
+.nav-label {
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: -0.1px;
+  text-align: center;
+}
+
+/* Badges for Tickets / Updates */
+.nav-badge {
+  position: absolute;
+  top: -4px;
+  right: -8px;
+  background-color: var(--teams-purple);
+  color: #FFFFFF;
+  font-size: 9.5px;
+  font-weight: 700;
+  padding: 1px 5px;
+  border-radius: var(--radius-pill);
+  min-width: 16px;
+  text-align: center;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+}
+
+/* Bottom Sidebar Utilities */
+.sidebar-bottom-tools {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.sidebar-tool-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  color: var(--rail-text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  transition: all 0.15s ease;
+  position: relative;
+}
+
+.sidebar-tool-btn:hover {
+  background: var(--rail-item-hover);
+  color: #FFFFFF;
+}
+
+.sidebar-tool-btn svg {
+  width: 19px;
+  height: 19px;
+  fill: currentColor;
+}
+
+/* Tooltip for Rail Items */
+[data-tooltip] {
+  position: relative;
+}
+
+[data-tooltip]::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  left: calc(100% + 10px);
+  top: 50%;
+  transform: translateY(-50%) scale(0.9);
+  background: #1B1A1E;
+  color: #FFFFFF;
+  padding: 5px 9px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 500;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transition: opacity 0.15s ease, transform 0.15s ease;
+  z-index: 999;
+}
+
+[data-tooltip]:hover::after {
+  opacity: 1;
+  transform: translateY(-50%) scale(1);
+}
+
+/* Mobile Sidebar Drawer Overlay */
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(2px);
+  z-index: 85;
+}
+
+.sidebar-overlay.active {
+  display: block;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .app-sidebar {
+    position: fixed;
+    top: var(--header-height);
+    bottom: 0;
+    left: 0;
+    width: 220px;
+    align-items: flex-start;
+    padding: 16px;
+    transform: translateX(-100%);
+    box-shadow: 4px 0 20px rgba(0, 0, 0, 0.4);
+  }
+
+  .app-sidebar.open {
+    transform: translateX(0);
+  }
+
+  .sidebar-logo-container {
+    flex-direction: row;
+    gap: 12px;
+    margin-bottom: 24px;
+    width: 100%;
+  }
+
+  .sidebar-logo-label {
+    font-size: 13px;
+    margin-top: 0;
+  }
+
+  .nav-item-btn {
+    height: 44px;
+    flex-direction: row;
+    justify-content: flex-start;
+    padding: 0 14px;
+    gap: 12px;
+    border-radius: var(--radius-sm);
+  }
+
+  .nav-item-btn.active::before {
+    top: 6px;
+    bottom: 6px;
+    left: 0;
+    width: 4px;
+  }
+
+  .nav-label {
+    font-size: 13px;
+  }
+
+  .sidebar-bottom-tools {
+    flex-direction: row;
+    justify-content: space-around;
+  }
+
+  [data-tooltip]::after {
+    display: none;
+  }
+}

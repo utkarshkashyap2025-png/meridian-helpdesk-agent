@@ -1,0 +1,232 @@
+/* ==========================================================================
+   IT SUPPORT VIEW (TEAMS INSPIRATION & PLACEHOLDER UI)
+   ========================================================================== */
+
+.it-support-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  background: var(--bg-app);
+  overflow-y: auto;
+}
+
+.it-hero-header {
+  background: linear-gradient(135deg, #FAF9F8 0%, #FFFFFF 100%);
+  border-bottom: 1px solid var(--border-light);
+  padding: 24px 32px;
+}
+
+.it-hero-content h2 {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.it-hero-content p {
+  font-size: 13.5px;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
+/* IT Diagnostic Dashboard Banner */
+.it-quick-status-grid {
+  padding: 20px 32px 0 32px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 14px;
+}
+
+.it-status-card {
+  background: #FFFFFF;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: var(--shadow-sm);
+}
+
+.status-card-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.status-card-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  background: var(--teams-blue-light);
+  color: var(--teams-blue);
+}
+
+.status-card-text h4 {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.status-card-text p {
+  font-size: 11.5px;
+  color: var(--text-secondary);
+}
+
+.status-badge-chip {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: var(--radius-pill);
+}
+
+.status-badge-chip.online {
+  background: #E6F8ED;
+  color: #107C41;
+}
+
+/* IT Section Title */
+.it-section-heading {
+  padding: 24px 32px 12px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.it-section-heading h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* Hardware & Software Catalog Cards */
+.it-catalog-grid {
+  padding: 0 32px 24px 32px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 18px;
+}
+
+.catalog-item-card {
+  background: #FFFFFF;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.2s ease;
+}
+
+.catalog-item-card:hover {
+  border-color: var(--teams-purple);
+  box-shadow: 0 4px 14px rgba(91, 95, 199, 0.12);
+  transform: translateY(-2px);
+}
+
+.catalog-item-icon-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.catalog-item-badge {
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 2px 7px;
+  border-radius: 4px;
+  background: var(--teams-blue-light);
+  color: var(--teams-blue);
+}
+
+.catalog-item-title {
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.catalog-item-specs {
+  font-size: 12.5px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-top: 6px;
+}
+
+.catalog-item-footer {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border-light);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.btn-request-item {
+  background: var(--teams-purple);
+  color: #FFFFFF;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  transition: background 0.15s;
+}
+
+.btn-request-item:hover {
+  background: var(--teams-purple-hover);
+}
+
+.catalog-lead-time {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+/* Quick Diagnostic Action Button */
+.btn-run-diag {
+  background: #EDEBE9;
+  color: var(--text-primary);
+  font-size: 12.5px;
+  font-weight: 600;
+  padding: 7px 14px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.15s;
+}
+
+.btn-run-diag:hover {
+  background: var(--teams-purple-light);
+  color: var(--teams-purple-dark);
+}
+
+@media (max-width: 768px) {
+  .it-hero-header {
+    padding: 16px;
+  }
+
+  .it-quick-status-grid {
+    padding: 16px 16px 0 16px;
+  }
+
+  .it-section-heading {
+    padding: 16px 16px 8px 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .it-catalog-grid {
+    padding: 0 16px 16px 16px;
+    grid-template-columns: 1fr;
+  }
+}

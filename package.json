@@ -1,0 +1,24 @@
+{
+  "name": "meridian-employee-helpdesk",
+  "version": "1.0.0",
+  "description": "Meridian Employee IT & HR Helpdesk - Modern Teams-inspired web interface with @n8n/chat integration",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "sync-policies": "node scripts/process-policies.js"
+  },
+  "dependencies": {
+    "@n8n/chat": "^1.44.6",
+    "lucide-react": "^1.64.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.7.0",
+    "docx": "^9.15.0",
+    "mammoth": "^1.13.0",
+    "vite": "^6.0.0"
+  }
+}
