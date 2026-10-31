@@ -1,5 +1,5 @@
 /* ==========================================================================
-   LEFT NAVIGATION SIDEBAR (TEAMS RAIL INSPIRATION)
+   LEFT NAVIGATION SIDEBAR (DEEP NAVY & GOLD ACCENT)
    ========================================================================== */
 
 .app-sidebar {
@@ -13,7 +13,7 @@
   user-select: none;
   flex-shrink: 0;
   z-index: 90;
-  border-right: 1px solid rgba(255, 255, 255, 0.06);
+  border-right: 1px solid rgba(231, 217, 191, 0.1);
   transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), width 0.2s ease;
 }
 
@@ -29,17 +29,19 @@
   width: 42px;
   height: 42px;
   border-radius: 10px;
-  background: linear-gradient(135deg, #5B5FC7, #36D1DC);
+  background: var(--color-primary-navy);
+  border: 1.5px solid var(--color-gold);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 12px rgba(91, 95, 199, 0.35);
-  transition: transform 0.2s ease;
+  box-shadow: 0 2px 8px rgba(9, 27, 46, 0.4);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
   cursor: pointer;
 }
 
 .sidebar-logo-icon:hover {
   transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(230, 182, 83, 0.25);
 }
 
 .sidebar-logo-icon img,
@@ -95,7 +97,7 @@
   background: var(--rail-item-active);
 }
 
-/* Active indicator strip (Teams signature purple bar) */
+/* Active indicator strip (Gold accent bar) */
 .nav-item-btn.active::before {
   content: '';
   position: absolute;
@@ -103,7 +105,7 @@
   top: 10px;
   bottom: 10px;
   width: 3.5px;
-  background-color: var(--teams-purple);
+  background-color: var(--color-gold);
   border-radius: 0 3px 3px 0;
 }
 
@@ -139,8 +141,8 @@
   position: absolute;
   top: -4px;
   right: -8px;
-  background-color: var(--teams-purple);
-  color: #FFFFFF;
+  background-color: var(--color-gold);
+  color: var(--color-deep-navy);
   font-size: 9.5px;
   font-weight: 700;
   padding: 1px 5px;
@@ -158,7 +160,7 @@
   gap: 8px;
   width: 100%;
   padding-top: 12px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid rgba(231, 217, 191, 0.1);
 }
 
 .sidebar-tool-btn {
@@ -196,7 +198,7 @@
   left: calc(100% + 10px);
   top: 50%;
   transform: translateY(-50%) scale(0.9);
-  background: #1B1A1E;
+  background: var(--color-deep-navy);
   color: #FFFFFF;
   padding: 5px 9px;
   border-radius: 4px;
@@ -205,6 +207,7 @@
   white-space: nowrap;
   pointer-events: none;
   opacity: 0;
+  border: 1px solid rgba(231, 217, 191, 0.2);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   transition: opacity 0.15s ease, transform 0.15s ease;
   z-index: 999;
@@ -220,7 +223,7 @@
   display: none;
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(9, 27, 46, 0.6);
   backdrop-filter: blur(2px);
   z-index: 85;
 }
@@ -240,7 +243,7 @@
     align-items: flex-start;
     padding: 16px;
     transform: translateX(-100%);
-    box-shadow: 4px 0 20px rgba(0, 0, 0, 0.4);
+    box-shadow: 4px 0 20px rgba(9, 27, 46, 0.4);
   }
 
   .app-sidebar.open {

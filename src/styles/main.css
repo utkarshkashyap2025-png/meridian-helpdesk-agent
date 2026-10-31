@@ -1,47 +1,75 @@
 /* ==========================================================================
    MERIDIAN EMPLOYEE HELPDESK - CORE DESIGN SYSTEM
-   Visual Inspiration: Microsoft Teams (Modern Fluent Purple/Blue Theme)
+   Theme: Executive Navy, Warm Sand & Gold Accent
    ========================================================================== */
 
 :root {
-  /* Microsoft Teams / Fluent-inspired Color Palette */
-  --teams-purple: #5B5FC7;
-  --teams-purple-hover: #4F52B2;
-  --teams-purple-light: #ECECF9;
-  --teams-purple-dark: #3D3E8E;
-  --teams-purple-soft: rgba(91, 95, 199, 0.12);
+  /* ==========================================================================
+     MERIDIAN DESIGN PALETTE
+     ========================================================================== */
+  --color-primary-navy: #0F2742;
+  --color-deep-navy: #091B2E;
+  --color-gold: #E6B653;
+  --color-sand: #F8F1E5;
+  --color-warm-white: #FFFCF6;
+  --color-primary-text: #142A43;
+  --color-secondary-text: #6B7788;
+  --color-border: #E7D9BF;
+  --color-success-green: #21845B;
 
-  --teams-blue: #0078D4;
-  --teams-blue-light: #EFF6FC;
-  --teams-teal: #008272;
-  --teams-teal-light: #E6F7F5;
+  /* Derived Tonal Variations */
+  --navy-hover: #17385E;
+  --navy-light: #EBF0F5;
+  --navy-soft: rgba(15, 39, 66, 0.08);
+  --deep-navy-hover: #13273D;
+  --gold-hover: #D4A340;
+  --gold-light: #FAF3E3;
+  --gold-soft: rgba(230, 182, 83, 0.16);
+  --sand-dark: #EDE3D1;
+  --border-focus: var(--color-primary-navy);
 
-  /* Neutrals & Dark Rail */
-  --rail-bg: #201F24;
-  --rail-item-hover: #2E2D33;
-  --rail-item-active: #393840;
-  --rail-text: #C8C6C4;
+  /* Semantic Theme Tokens */
+  --brand-primary: var(--color-primary-navy);
+  --brand-deep: var(--color-deep-navy);
+  --brand-accent: var(--color-gold);
+
+  --bg-app: var(--color-sand);
+  --bg-card: var(--color-warm-white);
+  --bg-subtle: #F3ECE0;
+  --border-light: var(--color-border);
+  --border-subtle: #D8C8AC;
+
+  /* Left Rail (Deep Navy Theme) */
+  --rail-bg: var(--color-deep-navy);
+  --rail-item-hover: #13273D;
+  --rail-item-active: #1D3958;
+  --rail-text: #BAC4D0;
   --rail-text-active: #FFFFFF;
 
-  --bg-app: #F5F5F7;
-  --bg-card: #FFFFFF;
-  --bg-subtle: #FAF9F8;
-  --border-light: #EDEBE9;
-  --border-subtle: #E1DFDD;
-  --border-focus: #5B5FC7;
-
   /* Text Colors */
-  --text-primary: #242424;
-  --text-secondary: #616161;
-  --text-muted: #8A8886;
+  --text-primary: var(--color-primary-text);
+  --text-secondary: var(--color-secondary-text);
+  --text-muted: #8E99A8;
   --text-inverse: #FFFFFF;
 
   /* Status Colors */
-  --status-available: #92C353;
+  --status-available: var(--color-success-green);
   --status-busy: #C4314B;
-  --status-away: #FDB913;
-  --status-in-progress: #0078D4;
-  --status-resolved: #107C41;
+  --status-away: var(--color-gold);
+  --status-in-progress: var(--color-primary-navy);
+  --status-resolved: var(--color-success-green);
+
+  /* Backward Compatibility & Alias Tokens for Clean Component Theming */
+  --teams-purple: var(--color-primary-navy);
+  --teams-purple-hover: var(--navy-hover);
+  --teams-purple-light: var(--navy-light);
+  --teams-purple-dark: var(--color-deep-navy);
+  --teams-purple-soft: var(--navy-soft);
+
+  --teams-blue: var(--color-primary-navy);
+  --teams-blue-light: var(--navy-light);
+  --teams-teal: var(--color-primary-navy);
+  --teams-teal-light: var(--navy-light);
 
   /* Typography */
   --font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
@@ -53,10 +81,10 @@
   --radius-lg: 14px;
   --radius-pill: 9999px;
 
-  --shadow-sm: 0 1.6px 3.6px 0 rgba(0, 0, 0, 0.13), 0 0.3px 0.9px 0 rgba(0, 0, 0, 0.11);
-  --shadow-md: 0 3.2px 7.2px 0 rgba(0, 0, 0, 0.13), 0 0.6px 1.8px 0 rgba(0, 0, 0, 0.11);
-  --shadow-lg: 0 6.4px 14.4px 0 rgba(0, 0, 0, 0.13), 0 1.2px 3.6px 0 rgba(0, 0, 0, 0.11);
-  --shadow-teams: 0 2px 10px rgba(91, 95, 199, 0.16);
+  --shadow-sm: 0 1px 3px 0 rgba(15, 39, 66, 0.08), 0 1px 2px -1px rgba(15, 39, 66, 0.08);
+  --shadow-md: 0 4px 6px -1px rgba(15, 39, 66, 0.09), 0 2px 4px -2px rgba(15, 39, 66, 0.07);
+  --shadow-lg: 0 10px 15px -3px rgba(15, 39, 66, 0.1), 0 4px 6px -4px rgba(15, 39, 66, 0.06);
+  --shadow-teams: 0 2px 10px rgba(15, 39, 66, 0.12);
 
   /* Top header height & rail width */
   --header-height: 52px;
@@ -106,6 +134,7 @@ input, textarea, select {
 
 .app-body {
   display: flex;
+  flex-content: 1;
   flex: 1;
   height: calc(100vh - var(--header-height));
   position: relative;
@@ -142,16 +171,16 @@ input, textarea, select {
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  background: #FFF4CE;
-  border-bottom: 1px solid #F2D27A;
-  color: #513600;
+  background: var(--gold-light);
+  border-bottom: 1px solid var(--color-border);
+  color: var(--color-primary-text);
   padding: 10px 20px;
   font-size: 13px;
   font-weight: 500;
 }
 
 .placeholder-notice-bar .notice-tag {
-  background: #795B00;
+  background: var(--color-primary-navy);
   color: #FFFFFF;
   padding: 2px 8px;
   border-radius: var(--radius-xs);
@@ -182,27 +211,27 @@ input, textarea, select {
   display: flex;
   align-items: center;
   gap: 10px;
-  background: #242424;
+  background: var(--color-deep-navy);
   color: #FFFFFF;
   padding: 12px 18px;
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-lg);
   font-size: 13.5px;
   animation: toastSlideIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  border-left: 4px solid var(--teams-purple);
+  border-left: 4px solid var(--color-gold);
   max-width: 420px;
 }
 
 .toast.toast-info {
-  border-left-color: var(--teams-purple);
+  border-left-color: var(--color-gold);
 }
 
 .toast.toast-warning {
-  border-left-color: #FDB913;
+  border-left-color: var(--color-gold);
 }
 
 .toast.toast-success {
-  border-left-color: var(--status-resolved);
+  border-left-color: var(--color-success-green);
 }
 
 @keyframes toastSlideIn {
@@ -227,10 +256,10 @@ input, textarea, select {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #C8C6C4;
+  background: #D8C8AC;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #A19F9D;
+  background: #C4B291;
 }

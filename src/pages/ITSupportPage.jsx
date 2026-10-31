@@ -235,7 +235,7 @@ export default function ITSupportPage({ onShowToast, onOpenRaiseTicket }) {
                 </span>
                 <button
                   className="btn-request-item"
-                  style={{ background: '#0078D4' }}
+                  style={{ background: 'var(--color-primary-navy)' }}
                   onClick={() => handleRequestSoftware(item.title)}
                 >
                   Request License

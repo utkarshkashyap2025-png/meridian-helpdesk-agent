@@ -13,6 +13,7 @@ export default function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isConfigModalOpen, setIsConfigModalOpen] = useState(false);
   const [isRaiseTicketModalOpen, setIsRaiseTicketModalOpen] = useState(false);
+  const [latestCreatedTicket, setLatestCreatedTicket] = useState(null);
   const [ticketModalDefaults, setTicketModalDefaults] = useState({
     category: 'IT Hardware',
     subject: '',
@@ -111,6 +112,7 @@ export default function App() {
               onOpenRaiseTicket={handleOpenRaiseTicket}
               onAskBot={handleAskBot}
               onShowToast={showToast}
+              latestCreatedTicket={latestCreatedTicket}
             />
           )}
 
@@ -137,6 +139,7 @@ export default function App() {
         initialCategory={ticketModalDefaults.category}
         initialSubject={ticketModalDefaults.subject}
         initialDescription={ticketModalDefaults.description}
+        onTicketSubmitted={(ticket) => setLatestCreatedTicket(ticket)}
         onShowToast={showToast}
       />
 

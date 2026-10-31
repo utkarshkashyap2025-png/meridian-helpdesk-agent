@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useUser, useAuth, useClerk } from '@clerk/react';
-import { Ticket, Send, ShieldCheck, X, AlertCircle, CheckCircle, Lock, User, Mail } from 'lucide-react';
-import { N8N_CONFIG } from '../config/n8n.js';
+import { Ticket, Send, ShieldCheck, X, User, Mail, Loader2 } from 'lucide-react';
+import { createTicket } from '../services/ticketsService.js';
 
 export default function RaiseTicketModal({
   isOpen,
@@ -27,6 +27,7 @@ export default function RaiseTicketModal({
       setCategory(initialCategory || 'IT Hardware');
       setSubject(initialSubject || '');
       setDescription(initialDescription || '');
+      setIsSubmitting(false);
     }
   }, [isOpen, initialCategory, initialSubject, initialDescription]);
 
@@ -46,6 +47,9 @@ export default function RaiseTicketModal({
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Prevent duplicate submissions
+    if (isSubmitting) return;
+
     if (!isSignedIn) {
       onShowToast && onShowToast('Please sign in to raise a ticket', 'warning');
       clerk.openSignIn();
@@ -59,64 +63,34 @@ export default function RaiseTicketModal({
 
     setIsSubmitting(true);
 
-    const ticketId = `MRD-${Math.floor(10000 + Math.random() * 90000)}`;
-    const newTicket = {
-      id: ticketId,
-      employeeName,
-      employeeEmail,
-      employeeId: user?.id || '',
-      category,
-      priority,
-      title: subject.trim(),
-      description: description.trim() || 'No additional details provided.',
-      status: 'Open',
-      createdAt: new Date().toISOString()
-    };
-
-    // Save to local persistence so employee can see it in "My Tickets"
     try {
-      const existing = JSON.parse(localStorage.getItem('meridian_tickets') || '[]');
-      localStorage.setItem('meridian_tickets', JSON.stringify([newTicket, ...existing]));
-    } catch (err) {
-      console.warn('Could not save ticket to localStorage:', err);
-    }
+      const createdTicket = await createTicket({
+        employeeName,
+        employeeEmail,
+        employeeId: user?.id || '',
+        category,
+        priority,
+        title: subject.trim(),
+        description: description.trim()
+      });
 
-    // Attempt optional webhook dispatch to n8n workflow if configured
-    const webhookUrl = (N8N_CONFIG.webhookUrl || '').trim();
-    if (webhookUrl && !webhookUrl.includes('YOUR_PRODUCTION_WEBHOOK_URL')) {
-      try {
-        await fetch(webhookUrl, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-Employee-Name': employeeName,
-            'X-Employee-Email': employeeEmail,
-            'X-Employee-Id': user?.id || ''
-          },
-          body: JSON.stringify({
-            event: 'ticket_created',
-            ticket: newTicket,
-            message: `[Ticket Raised by ${employeeName} <${employeeEmail}>]: ${newTicket.title} - ${newTicket.description}`
-          })
-        }).catch(() => {
-          // Ignore network errors on chat webhook
-        });
-      } catch (err) {
-        // Non-blocking
+      onShowToast && onShowToast(`✓ Ticket #${createdTicket.id} created successfully for ${employeeName}!`, 'success');
+
+      if (onTicketSubmitted) {
+        onTicketSubmitted(createdTicket);
       }
-    }
 
-    setIsSubmitting(false);
-
-    onShowToast && onShowToast(`✓ Ticket #${ticketId} created successfully for ${employeeName}!`, 'success');
-    if (onTicketSubmitted) {
-      onTicketSubmitted(newTicket);
+      onClose();
+    } catch (err) {
+      console.error('Failed to create ticket via n8n:', err);
+      onShowToast && onShowToast(`Failed to create ticket: ${err.message}`, 'error');
+    } finally {
+      setIsSubmitting(false);
     }
-    onClose();
   };
 
   return (
-    <div className="ticket-modal-backdrop active" onClick={onClose}>
+    <div className="ticket-modal-backdrop active" onClick={isSubmitting ? undefined : onClose}>
       <div className="ticket-modal-card" onClick={(e) => e.stopPropagation()}>
         {/* Header */}
         <div className="ticket-modal-header">
@@ -129,7 +103,12 @@ export default function RaiseTicketModal({
               <p>Submit an IT or HR request with your verified employee credentials</p>
             </div>
           </div>
-          <button className="ticket-modal-close-btn" onClick={onClose} aria-label="Close modal">
+          <button 
+            className="ticket-modal-close-btn" 
+            onClick={onClose} 
+            aria-label="Close modal"
+            disabled={isSubmitting}
+          >
             <X size={18} />
           </button>
         </div>
@@ -171,6 +150,7 @@ export default function RaiseTicketModal({
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
                 className="ticket-form-input"
+                disabled={isSubmitting}
               >
                 <option value="IT Hardware">IT Hardware (Laptop, Monitor, Peripherals)</option>
                 <option value="IT Security">IT Security & MFA (Okta, Password, YubiKey)</option>
@@ -190,6 +170,7 @@ export default function RaiseTicketModal({
                 value={priority}
                 onChange={(e) => setPriority(e.target.value)}
                 className="ticket-form-input"
+                disabled={isSubmitting}
               >
                 <option value="Low">Low (General question / Non-urgent)</option>
                 <option value="Medium">Medium (Standard request — 24h SLA)</option>
@@ -210,6 +191,7 @@ export default function RaiseTicketModal({
               value={subject}
               onChange={(e) => setSubject(e.target.value)}
               className="ticket-form-input"
+              disabled={isSubmitting}
               required
             />
           </div>
@@ -223,17 +205,36 @@ export default function RaiseTicketModal({
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               className="ticket-form-textarea"
+              disabled={isSubmitting}
             />
           </div>
 
           {/* Footer Actions */}
           <div className="ticket-modal-actions">
-            <button type="button" className="ticket-btn-cancel" onClick={onClose} disabled={isSubmitting}>
+            <button 
+              type="button" 
+              className="ticket-btn-cancel" 
+              onClick={onClose} 
+              disabled={isSubmitting}
+            >
               Cancel
             </button>
-            <button type="submit" className="ticket-btn-submit" disabled={isSubmitting}>
-              <Send size={15} style={{ marginRight: 6 }} />
-              {isSubmitting ? 'Submitting Ticket...' : 'Submit Support Ticket'}
+            <button 
+              type="submit" 
+              className="ticket-btn-submit" 
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? (
+                <>
+                  <Loader2 size={15} className="spinner-icon" style={{ marginRight: 6 }} />
+                  Submitting to n8n & Google Sheets...
+                </>
+              ) : (
+                <>
+                  <Send size={15} style={{ marginRight: 6 }} />
+                  Submit Support Ticket
+                </>
+              )}
             </button>
           </div>
         </form>
@@ -241,4 +242,3 @@ export default function RaiseTicketModal({
     </div>
   );
 }
-

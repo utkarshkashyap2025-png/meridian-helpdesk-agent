@@ -35,8 +35,8 @@ export default function HRPoliciesPage({ onAskBot, onShowToast }) {
     <section id="tab-hr-policies" className="tab-panel active" aria-label="HR Policies">
       <div className="policies-container">
         {/* Notice Bar */}
-        <div className="placeholder-notice-bar" style={{ background: '#EFF6FC', borderBottomColor: '#C7E0F4', color: '#004E8C' }}>
-          <span className="notice-tag" style={{ background: '#0078D4' }}>Official Knowledge Base</span>
+        <div className="placeholder-notice-bar" style={{ background: 'var(--navy-light)', borderBottomColor: 'var(--color-border)', color: 'var(--color-primary-navy)' }}>
+          <span className="notice-tag" style={{ background: 'var(--color-primary-navy)' }}>Official Knowledge Base</span>
           <span className="notice-text">
             Meridian Official Employee Policy & Benefits Library. Searching policies queries directly against your n8n AI knowledge base.
           </span>
@@ -55,8 +55,8 @@ export default function HRPoliciesPage({ onAskBot, onShowToast }) {
         {OFFICIAL_POLICIES.length === 0 ? (
           <div
             style={{
-              background: '#FFFFFF',
-              border: '1px solid #EDEBE9',
+              background: 'var(--color-warm-white)',
+              border: '1px solid var(--color-border)',
               borderRadius: '12px',
               padding: '48px 32px',
               textAlign: 'center',
@@ -70,8 +70,8 @@ export default function HRPoliciesPage({ onAskBot, onShowToast }) {
                 width: '54px',
                 height: '54px',
                 borderRadius: '14px',
-                background: 'var(--teams-purple-light)',
-                color: 'var(--teams-purple-dark)',
+                background: 'var(--navy-light)',
+                color: 'var(--color-primary-navy)',
                 display: 'inline-flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -81,7 +81,7 @@ export default function HRPoliciesPage({ onAskBot, onShowToast }) {
             >
               📜
             </div>
-            <h3 style={{ fontSize: '18px', fontWeight: 600, color: '#242424', marginBottom: '8px' }}>
+            <h3 style={{ fontSize: '18px', fontWeight: 600, color: 'var(--color-primary-text)', marginBottom: '8px' }}>
               Awaiting Official Policy Documents (.docx)
             </h3>
             <p style={{ fontSize: '13.5px', color: '#616161', lineHeight: '1.6', maxWidth: '600px', margin: '0 auto 20px auto' }}>
