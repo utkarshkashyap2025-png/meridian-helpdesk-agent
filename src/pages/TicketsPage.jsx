@@ -1,66 +1,63 @@
 import React, { useState, useEffect } from 'react';
 import { useUser, useAuth, useClerk } from '@clerk/react';
-import { Ticket, Plus, Clock, CheckCircle2, AlertTriangle, ShieldCheck, User, Mail, MessageSquare, ExternalLink } from 'lucide-react';
+import { Ticket, Plus, Clock, CheckCircle2, AlertTriangle, ShieldCheck, User, Mail, MessageSquare, RefreshCw } from 'lucide-react';
+import { fetchTickets } from '../services/ticketsService.js';
 
-export default function TicketsPage({ onOpenRaiseTicket, onAskBot, onShowToast }) {
+export default function TicketsPage({ onOpenRaiseTicket, onAskBot, onShowToast, latestCreatedTicket }) {
   const { isSignedIn } = useAuth();
   const { user } = useUser();
   const clerk = useClerk();
 
   const employeeName = user?.fullName || [user?.firstName, user?.lastName].filter(Boolean).join(' ') || user?.username || 'Employee';
-  const employeeEmail = user?.primaryEmailAddress?.emailAddress || user?.emailAddresses?.[0]?.emailAddress || 'employee@meridian.corp';
+  const employeeEmail = user?.primaryEmailAddress?.emailAddress || user?.emailAddresses?.[0]?.emailAddress || '';
 
   const [tickets, setTickets] = useState([]);
   const [filterStatus, setFilterStatus] = useState('All');
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  // Load tickets from localStorage or initialize with sample records associated with this employee
-  useEffect(() => {
+  // Fetch tickets for this authenticated employee
+  const loadTickets = async () => {
+    setIsLoading(true);
+    setError(null);
     try {
-      const stored = localStorage.getItem('meridian_tickets');
-      if (stored) {
-        setTickets(JSON.parse(stored));
-      } else {
-        const initial = [
-          {
-            id: 'MRD-84291',
-            employeeName,
-            employeeEmail,
-            category: 'IT Hardware',
-            priority: 'Medium',
-            title: 'MacBook Pro Hardware Refresh & USB-C Hub Allocation',
-            description: 'Employee eligible for triennial hardware upgrade cycle. Requesting MacBook Pro 16" with 36GB memory.',
-            status: 'In Progress',
-            createdAt: new Date(Date.now() - 86400000 * 2).toISOString(),
-            assignedTo: 'Marcus Vance'
-          },
-          {
-            id: 'MRD-83904',
-            employeeName,
-            employeeEmail,
-            category: 'IT Security',
-            priority: 'High',
-            title: 'Okta MFA Secondary Device Re-registration',
-            description: 'New mobile device provisioning requires push notification and biometric setup reset.',
-            status: 'Resolved',
-            createdAt: new Date(Date.now() - 86400000 * 6).toISOString(),
-            assignedTo: 'IT Security Ops'
-          }
-        ];
-        localStorage.setItem('meridian_tickets', JSON.stringify(initial));
-        setTickets(initial);
-      }
-    } catch (e) {
-      console.warn('Error reading tickets:', e);
+      const data = await fetchTickets(employeeEmail);
+      setTickets(data);
+    } catch (err) {
+      console.error('Error fetching tickets:', err);
+      setError(err.message || 'Failed to load tickets.');
+      onShowToast && onShowToast(`Error fetching tickets: ${err.message}`, 'error');
+    } finally {
+      setIsLoading(false);
     }
-  }, [employeeName, employeeEmail]);
+  };
+
+  useEffect(() => {
+    loadTickets();
+  }, [employeeEmail]);
+
+  // Immediately prepend newly created ticket to page without requiring full refresh
+  useEffect(() => {
+    if (latestCreatedTicket) {
+      setTickets((prev) => {
+        const exists = prev.some((t) => t.id === latestCreatedTicket.id);
+        if (exists) return prev;
+        return [latestCreatedTicket, ...prev];
+      });
+    }
+  }, [latestCreatedTicket]);
 
   const filteredTickets = tickets.filter((t) => {
     if (filterStatus === 'All') return true;
-    return t.status.toLowerCase() === filterStatus.toLowerCase();
+    return (t.status || '').toLowerCase() === filterStatus.toLowerCase();
   });
 
-  const openCount = tickets.filter((t) => t.status === 'Open' || t.status === 'In Progress').length;
-  const resolvedCount = tickets.filter((t) => t.status === 'Resolved').length;
+  const openCount = tickets.filter((t) => {
+    const s = (t.status || '').toLowerCase();
+    return s === 'open' || s === 'in progress';
+  }).length;
+
+  const resolvedCount = tickets.filter((t) => (t.status || '').toLowerCase() === 'resolved').length;
 
   return (
     <section id="tab-tickets" className="tab-panel active" aria-label="Support Tickets">
@@ -97,7 +94,7 @@ export default function TicketsPage({ onOpenRaiseTicket, onAskBot, onShowToast }
             <div>
               <strong>Authenticated Employee Identity (Clerk)</strong>
               <p>
-                All tickets automatically access and record your verified name <strong>{employeeName}</strong> and email <strong>{employeeEmail}</strong>.
+                All tickets automatically access and record your verified name <strong>{employeeName}</strong> and email <strong>{employeeEmail || 'Sign in to sync'}</strong>.
               </p>
             </div>
           </div>
@@ -131,8 +128,30 @@ export default function TicketsPage({ onOpenRaiseTicket, onAskBot, onShowToast }
           </span>
         </div>
 
-        {/* Tickets Grid / List */}
-        {filteredTickets.length === 0 ? (
+        {/* Loading State */}
+        {isLoading && (
+          <div className="tickets-loading-state">
+            <div className="tickets-loading-spinner" />
+            <h3>Fetching Tickets...</h3>
+            <p>Connecting to n8n & Google Sheets for {employeeEmail || 'authenticated user'}...</p>
+          </div>
+        )}
+
+        {/* Error State */}
+        {!isLoading && error && (
+          <div className="tickets-error-state">
+            <AlertTriangle size={42} color="#D13438" style={{ marginBottom: 14 }} />
+            <h3>Unable to Load Tickets</h3>
+            <p>{error}</p>
+            <button className="tickets-retry-btn" onClick={loadTickets}>
+              <RefreshCw size={14} />
+              <span>Retry Connection</span>
+            </button>
+          </div>
+        )}
+
+        {/* Empty State */}
+        {!isLoading && !error && filteredTickets.length === 0 && (
           <div className="tickets-empty-state">
             <Ticket size={48} color="#A19F9D" style={{ marginBottom: 16 }} />
             <h3>No Tickets Found</h3>
@@ -142,23 +161,26 @@ export default function TicketsPage({ onOpenRaiseTicket, onAskBot, onShowToast }
               Raise a Support Ticket
             </button>
           </div>
-        ) : (
+        )}
+
+        {/* Real Tickets Grid */}
+        {!isLoading && !error && filteredTickets.length > 0 && (
           <div className="tickets-card-grid">
             {filteredTickets.map((ticket) => {
-              const isOpen = ticket.status === 'Open';
-              const isInProgress = ticket.status === 'In Progress';
-              const isResolved = ticket.status === 'Resolved';
+              const statusLower = (ticket.status || '').toLowerCase();
+              const isResolved = statusLower === 'resolved';
+              const isInProgress = statusLower === 'in progress';
 
               return (
                 <div key={ticket.id} className="ticket-item-card">
                   <div className="ticket-item-top">
                     <div className="ticket-id-category">
                       <span className="ticket-id-pill">{ticket.id}</span>
-                      <span className="ticket-category-label">{ticket.category}</span>
+                      <span className="ticket-category-label">{ticket.category || 'IT Support'}</span>
                     </div>
                     <div className="ticket-status-priority">
-                      <span className={`ticket-priority-pill ${ticket.priority?.toLowerCase()}`}>
-                        {ticket.priority} Priority
+                      <span className={`ticket-priority-pill ${(ticket.priority || 'medium').toLowerCase()}`}>
+                        {ticket.priority || 'Medium'} Priority
                       </span>
                       <span
                         className={`ticket-status-pill ${
@@ -187,15 +209,17 @@ export default function TicketsPage({ onOpenRaiseTicket, onAskBot, onShowToast }
                   <div className="ticket-item-bottom">
                     <span className="ticket-created-time">
                       <Clock size={13} style={{ marginRight: 5 }} />
-                      {new Date(ticket.createdAt).toLocaleDateString(undefined, {
-                        month: 'short',
-                        day: 'numeric',
-                        year: 'numeric'
-                      })}
+                      {ticket.createdAt
+                        ? new Date(ticket.createdAt).toLocaleDateString(undefined, {
+                            month: 'short',
+                            day: 'numeric',
+                            year: 'numeric'
+                          })
+                        : 'Recent'}
                     </span>
                     <button
                       className="ticket-ask-bot-btn"
-                      onClick={() => onAskBot(`Can you check the current status and updates for ticket #${ticket.id}: "${ticket.title}"?`)}
+                      onClick={() => onAskBot(`Can you check the current status and updates for ticket #${ticket.id}: "${ticket.title}" in Google Sheets?`)}
                       title="Ask the AI Assistant about this ticket"
                     >
                       <MessageSquare size={13} style={{ marginRight: 5 }} />
@@ -211,4 +235,3 @@ export default function TicketsPage({ onOpenRaiseTicket, onAskBot, onShowToast }
     </section>
   );
 }
-

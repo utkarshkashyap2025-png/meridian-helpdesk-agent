@@ -364,15 +364,15 @@ export default function ChatWindow({
 
               <div className="chat-auth-gate-features">
                 <div className="gate-feature-item">
-                  <ShieldCheck size={16} color="var(--teams-purple)" />
+                  <ShieldCheck size={16} color="var(--color-primary-navy)" />
                   <span>Secure Meridian SSO & Role-Based Access</span>
                 </div>
                 <div className="gate-feature-item">
-                  <Bot size={16} color="var(--teams-purple)" />
+                  <Bot size={16} color="var(--color-primary-navy)" />
                   <span>Interactive IT & HR AI Resolution</span>
                 </div>
                 <div className="gate-feature-item">
-                  <UserCheck size={16} color="var(--teams-purple)" />
+                  <UserCheck size={16} color="var(--color-primary-navy)" />
                   <span>Automatic Ticket Identification with Clerk</span>
                 </div>
               </div>
@@ -412,8 +412,8 @@ export default function ChatWindow({
                     width: '42px',
                     height: '42px',
                     borderRadius: '10px',
-                    background: 'var(--teams-purple-light)',
-                    color: 'var(--teams-purple-dark)',
+                    background: 'var(--navy-light)',
+                    color: 'var(--color-primary-navy)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center'

@@ -1,5 +1,5 @@
 /* ==========================================================================
-   CHAT VIEW (TEAMS INSPIRATION & @n8n/chat INTEGRATION)
+   CHAT VIEW (NAVY, SAND & GOLD THEME & @n8n/chat INTEGRATION)
    ========================================================================== */
 
 .chat-view-container {
@@ -7,15 +7,15 @@
   flex-direction: column;
   height: 100%;
   width: 100%;
-  background: var(--bg-app);
+  background: var(--color-sand);
   overflow: hidden;
   position: relative;
 }
 
 /* Chat Header / Welcome Strip */
 .chat-welcome-strip {
-  background: linear-gradient(135deg, #FAF9F8 0%, #FFFFFF 100%);
-  border-bottom: 1px solid var(--border-light);
+  background: var(--color-warm-white);
+  border-bottom: 1px solid var(--color-border);
   padding: 16px 24px 14px 24px;
   display: flex;
   align-items: center;
@@ -34,12 +34,13 @@
   width: 44px;
   height: 44px;
   border-radius: 12px;
-  background: linear-gradient(135deg, var(--teams-purple), #36D1DC);
+  background: var(--color-primary-navy);
+  border: 1.5px solid var(--color-gold);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 12px rgba(91, 95, 199, 0.25);
-  color: #FFFFFF;
+  box-shadow: 0 2px 8px rgba(9, 27, 46, 0.25);
+  color: var(--color-gold);
 }
 
 .welcome-bot-avatar svg {
@@ -50,7 +51,7 @@
 .welcome-text-group h2 {
   font-size: 17px;
   font-weight: 600;
-  color: var(--text-primary);
+  color: var(--color-primary-text);
   display: flex;
   align-items: center;
   gap: 8px;
@@ -59,8 +60,8 @@
 .welcome-badge-online {
   font-size: 11px;
   font-weight: 600;
-  background: #E6F8ED;
-  color: #107C41;
+  background: #EAF4EE;
+  color: var(--color-success-green);
   padding: 2px 8px;
   border-radius: var(--radius-pill);
   display: inline-flex;
@@ -73,12 +74,12 @@
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background-color: #107C41;
+  background-color: var(--color-success-green);
 }
 
 .welcome-text-group p {
   font-size: 12.5px;
-  color: var(--text-secondary);
+  color: var(--color-secondary-text);
   margin-top: 2px;
 }
 
@@ -91,33 +92,33 @@
   border-radius: var(--radius-pill);
   font-size: 12px;
   font-weight: 500;
-  background: #FFFFFF;
-  border: 1px solid var(--border-subtle);
+  background: var(--color-warm-white);
+  border: 1px solid var(--color-border);
   box-shadow: var(--shadow-sm);
 }
 
 .chat-status-pill.connected {
-  border-color: #A3E0BA;
-  background: #F1FAF4;
-  color: #0E6836;
+  border-color: #B5DFCA;
+  background: #EAF4EE;
+  color: var(--color-success-green);
 }
 
 .chat-status-pill.ready-to-connect {
-  border-color: #F8D88A;
-  background: #FFFDF5;
-  color: #795B00;
+  border-color: var(--color-border);
+  background: var(--gold-light);
+  color: var(--color-deep-navy);
   cursor: pointer;
 }
 
 .chat-status-pill.ready-to-connect:hover {
-  background: #FFF9E6;
+  background: #F4E8D0;
 }
 
 /* Example Help Prompts Bar */
 .chat-prompts-section {
   padding: 12px 24px;
-  background: #FFFFFF;
-  border-bottom: 1px solid var(--border-light);
+  background: var(--color-warm-white);
+  border-bottom: 1px solid var(--color-border);
   flex-shrink: 0;
 }
 
@@ -131,7 +132,7 @@
 .prompts-label {
   font-size: 11.5px;
   font-weight: 600;
-  color: var(--text-secondary);
+  color: var(--color-secondary-text);
   text-transform: uppercase;
   letter-spacing: 0.5px;
   display: flex;
@@ -152,11 +153,11 @@
   align-items: center;
   gap: 8px;
   padding: 8px 14px;
-  background: var(--bg-app);
-  border: 1px solid var(--border-light);
+  background: var(--color-sand);
+  border: 1px solid var(--color-border);
   border-radius: 20px;
   font-size: 12.5px;
-  color: var(--text-primary);
+  color: var(--color-primary-text);
   white-space: nowrap;
   cursor: pointer;
   transition: all 0.18s ease;
@@ -165,11 +166,11 @@
 }
 
 .prompt-pill-card:hover {
-  background: var(--teams-purple-light);
-  border-color: var(--teams-purple);
-  color: var(--teams-purple-dark);
+  background: var(--color-warm-white);
+  border-color: var(--color-gold);
+  color: var(--color-primary-navy);
   transform: translateY(-1px);
-  box-shadow: 0 2px 6px rgba(91, 95, 199, 0.15);
+  box-shadow: 0 2px 6px rgba(15, 39, 66, 0.12);
 }
 
 .prompt-pill-card .pill-icon {
@@ -185,13 +186,13 @@
 }
 
 .prompt-pill-card.it .pill-category {
-  background: var(--teams-blue-light);
-  color: var(--teams-blue);
+  background: var(--navy-light);
+  color: var(--color-primary-navy);
 }
 
 .prompt-pill-card.hr .pill-category {
-  background: #F4ECF8;
-  color: #7B3F98;
+  background: var(--gold-light);
+  color: #8A6414;
 }
 
 /* Main Chat Stage */
@@ -201,7 +202,7 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  background: #F8F9FA;
+  background: var(--color-sand);
 }
 
 /* Native Embedded Chat Workspace */
@@ -244,12 +245,14 @@
 }
 
 .msg-bot .msg-avatar {
-  background: linear-gradient(135deg, var(--teams-purple), #4F52B2);
-  color: #FFFFFF;
+  background: var(--color-primary-navy);
+  border: 1.5px solid var(--color-gold);
+  color: var(--color-gold);
 }
 
 .msg-user .msg-avatar {
-  background: #36D1DC;
+  background: var(--color-deep-navy);
+  border: 1.5px solid var(--color-border);
   color: #FFFFFF;
 }
 
@@ -262,7 +265,7 @@
 
 .msg-sender-meta {
   font-size: 11px;
-  color: var(--text-muted);
+  color: var(--color-secondary-text);
   display: flex;
   align-items: center;
   gap: 8px;
@@ -282,14 +285,14 @@
 }
 
 .msg-bot .msg-bubble {
-  background: #FFFFFF;
-  color: var(--text-primary);
-  border: 1px solid var(--border-light);
+  background: var(--color-warm-white);
+  color: var(--color-primary-text);
+  border: 1px solid var(--color-border);
   border-top-left-radius: 2px;
 }
 
 .msg-user .msg-bubble {
-  background: var(--teams-purple);
+  background: var(--color-primary-navy);
   color: #FFFFFF;
   border-top-right-radius: 2px;
 }
@@ -314,12 +317,12 @@
   gap: 8px;
   margin-top: 10px;
   padding-top: 10px;
-  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  border-top: 1px solid var(--color-border);
 }
 
 .msg-action-btn {
-  background: var(--teams-purple-light);
-  color: var(--teams-purple-dark);
+  background: var(--navy-light);
+  color: var(--color-primary-navy);
   font-size: 11.5px;
   font-weight: 600;
   padding: 5px 10px;
@@ -327,25 +330,27 @@
   display: flex;
   align-items: center;
   gap: 5px;
+  border: 1px solid var(--color-border);
   transition: all 0.15s;
 }
 
 .msg-action-btn:hover {
-  background: var(--teams-purple);
+  background: var(--color-primary-navy);
   color: #FFFFFF;
+  border-color: var(--color-primary-navy);
 }
 
-/* Chat Input Bar (Teams Composition Style) */
+/* Chat Input Bar */
 .chat-input-bar-container {
   padding: 16px 24px 20px 24px;
-  background: #FFFFFF;
-  border-top: 1px solid var(--border-light);
+  background: var(--color-warm-white);
+  border-top: 1px solid var(--color-border);
   flex-shrink: 0;
 }
 
 .chat-input-box-wrapper {
-  background: #FFFFFF;
-  border: 1px solid var(--border-subtle);
+  background: var(--color-warm-white);
+  border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-sm);
   transition: border-color 0.2s, box-shadow 0.2s;
@@ -353,8 +358,8 @@
 }
 
 .chat-input-box-wrapper:focus-within {
-  border-color: var(--teams-purple);
-  box-shadow: 0 0 0 2px rgba(91, 95, 199, 0.2);
+  border-color: var(--color-primary-navy);
+  box-shadow: 0 0 0 2px rgba(15, 39, 66, 0.15);
 }
 
 .chat-textarea {
@@ -365,7 +370,7 @@
   padding: 12px 16px 8px 16px;
   font-family: inherit;
   font-size: 13.5px;
-  color: var(--text-primary);
+  color: var(--color-primary-text);
   max-height: 120px;
   min-height: 48px;
   background: transparent;
@@ -376,15 +381,15 @@
   align-items: center;
   justify-content: space-between;
   padding: 6px 12px 8px 12px;
-  background: #FAF9F8;
-  border-top: 1px solid #F0EFEF;
+  background: var(--color-sand);
+  border-top: 1px solid var(--color-border);
 }
 
 .input-quick-helpers {
   display: flex;
   align-items: center;
   gap: 6px;
-  color: var(--text-secondary);
+  color: var(--color-secondary-text);
 }
 
 .input-tool-icon-btn {
@@ -394,13 +399,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--text-secondary);
+  color: var(--color-secondary-text);
   transition: background 0.15s;
 }
 
 .input-tool-icon-btn:hover {
-  background: #EDEBE9;
-  color: var(--text-primary);
+  background: var(--color-warm-white);
+  color: var(--color-primary-text);
 }
 
 .input-tool-icon-btn svg {
@@ -410,7 +415,7 @@
 }
 
 .chat-send-btn {
-  background: var(--teams-purple);
+  background: var(--color-primary-navy);
   color: #FFFFFF;
   font-size: 13px;
   font-weight: 600;
@@ -419,11 +424,13 @@
   display: flex;
   align-items: center;
   gap: 6px;
+  border: none;
+  cursor: pointer;
   transition: background 0.15s, transform 0.1s;
 }
 
 .chat-send-btn:hover {
-  background: var(--teams-purple-hover);
+  background: var(--navy-hover);
 }
 
 .chat-send-btn:active {
@@ -443,7 +450,7 @@
   height: 100%;
   flex: 1;
   position: relative;
-  background: #F8F9FA;
+  background: var(--color-sand);
   overflow: hidden;
 }
 
@@ -452,7 +459,7 @@
   flex-direction: column;
 }
 
-/* Hide the unwanted internal n8n black header banner (prevents duplicate headers) */
+/* Hide internal n8n header banner */
 #n8n-chat-container .chat-header {
   display: none !important;
   height: 0 !important;
@@ -463,7 +470,7 @@
   overflow: hidden !important;
 }
 
-/* Microsoft Teams Fluent styling for embedded @n8n/chat */
+/* Styling for embedded @n8n/chat */
 #n8n-chat-container .chat-wrapper,
 #n8n-chat-container .chat-layout {
   height: 100% !important;
@@ -478,7 +485,7 @@
 }
 
 #n8n-chat-container .chat-body {
-  background: #F8F9FA !important;
+  background: var(--color-sand) !important;
   flex: 1 !important;
   min-height: 0 !important;
   overflow-y: auto !important;
@@ -489,7 +496,7 @@
   background: transparent !important;
 }
 
-/* Teams-styled message bubbles */
+/* Message bubbles */
 #n8n-chat-container .chat-message {
   font-family: inherit !important;
   font-size: 13.5px !important;
@@ -498,91 +505,91 @@
 }
 
 #n8n-chat-container .chat-message.chat-message-from-bot {
-  background-color: #FFFFFF !important;
-  color: var(--text-primary) !important;
-  border: 1px solid var(--border-light) !important;
+  background-color: var(--color-warm-white) !important;
+  color: var(--color-primary-text) !important;
+  border: 1px solid var(--color-border) !important;
   border-radius: 10px !important;
   border-top-left-radius: 2px !important;
-  box-shadow: 0 1.6px 3.6px 0 rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 1px 3px rgba(15, 39, 66, 0.08) !important;
 }
 
 #n8n-chat-container .chat-message.chat-message-from-user {
-  background-color: var(--teams-purple) !important;
+  background-color: var(--color-primary-navy) !important;
   color: #FFFFFF !important;
   border-radius: 10px !important;
   border-top-right-radius: 2px !important;
-  box-shadow: 0 1.6px 3.6px 0 rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 1px 3px rgba(15, 39, 66, 0.08) !important;
 }
 
-/* Teams-styled bottom input composition bar */
+/* Bottom input composition bar */
 #n8n-chat-container .chat-footer {
-  background: #FFFFFF !important;
-  border-top: 1px solid var(--border-light) !important;
+  background: var(--color-warm-white) !important;
+  border-top: 1px solid var(--color-border) !important;
   padding: 12px 24px 16px 24px !important;
   flex-shrink: 0 !important;
 }
 
 #n8n-chat-container .chat-inputs {
-  background: #FFFFFF !important;
-  border: 1px solid var(--border-subtle) !important;
+  background: var(--color-warm-white) !important;
+  border: 1px solid var(--color-border) !important;
   border-radius: 8px !important;
   padding: 8px 12px !important;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06) !important;
+  box-shadow: 0 1px 3px rgba(15, 39, 66, 0.06) !important;
   transition: border-color 0.2s, box-shadow 0.2s !important;
 }
 
 #n8n-chat-container .chat-inputs:focus-within {
-  border-color: var(--teams-purple) !important;
-  box-shadow: 0 0 0 2px rgba(91, 95, 199, 0.2) !important;
+  border-color: var(--color-primary-navy) !important;
+  box-shadow: 0 0 0 2px rgba(15, 39, 66, 0.15) !important;
 }
 
 #n8n-chat-container .chat-inputs textarea {
   font-family: inherit !important;
   font-size: 13.5px !important;
-  color: var(--text-primary) !important;
+  color: var(--color-primary-text) !important;
   background: transparent !important;
   padding: 4px 6px !important;
 }
 
 #n8n-chat-container .chat-inputs textarea::placeholder {
-  color: var(--text-muted) !important;
+  color: var(--color-secondary-text) !important;
   font-size: 13px !important;
 }
 
 #n8n-chat-container .chat-input-send-button {
-  color: var(--teams-purple) !important;
+  color: var(--color-primary-navy) !important;
   border-radius: 6px !important;
   transition: all 0.15s ease !important;
 }
 
 #n8n-chat-container .chat-input-send-button:hover:not([disabled]) {
-  background: var(--teams-purple-light) !important;
-  color: var(--teams-purple-dark) !important;
+  background: var(--navy-light) !important;
+  color: var(--color-primary-navy) !important;
 }
 
 /* @n8n/chat custom CSS theme overrides */
 :root {
-  --chat--color-primary: #5B5FC7;
-  --chat--color-primary-shade-50: #4F52B2;
-  --chat--color-primary-shade-100: #3D3E8E;
-  --chat--color--primary: #5B5FC7;
-  --chat--color--primary-shade-50: #4F52B2;
-  --chat--color--primary-shade-100: #3D3E8E;
-  --chat--color-secondary: #0078D4;
-  --chat--color-secondary-shade-50: #106EBE;
-  --chat--color--secondary: #5B5FC7;
-  --chat--color-white: #FFFFFF;
-  --chat--color-light: #F8F9FA;
-  --chat--color-dark: #242424;
+  --chat--color-primary: #0F2742;
+  --chat--color-primary-shade-50: #091B2E;
+  --chat--color-primary-shade-100: #05101C;
+  --chat--color--primary: #0F2742;
+  --chat--color--primary-shade-50: #091B2E;
+  --chat--color--primary-shade-100: #05101C;
+  --chat--color-secondary: #E6B653;
+  --chat--color-secondary-shade-50: #D4A340;
+  --chat--color--secondary: #E6B653;
+  --chat--color-white: #FFFCF6;
+  --chat--color-light: #F8F1E5;
+  --chat--color-dark: #142A43;
   --chat--border-radius: 8px;
   --chat--header--background: transparent;
   --chat--header-height: 0px;
   --chat--header--padding: 0px;
-  --chat--message--bot--background: #FFFFFF;
-  --chat--message--bot--color: #242424;
-  --chat--message--user--background: #5B5FC7;
+  --chat--message--bot--background: #FFFCF6;
+  --chat--message--bot--color: #142A43;
+  --chat--message--user--background: #0F2742;
   --chat--message--user--color: #FFFFFF;
-  --chat--toggle--background: #5B5FC7;
+  --chat--toggle--background: #0F2742;
 }
 
 /* Config Help Modal */
@@ -590,7 +597,7 @@
   display: none;
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.55);
+  background: rgba(9, 27, 46, 0.6);
   backdrop-filter: blur(3px);
   z-index: 10000;
   align-items: center;
@@ -603,23 +610,24 @@
 }
 
 .config-modal-window {
-  background: #FFFFFF;
+  background: var(--color-warm-white);
   width: 100%;
   max-width: 580px;
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg);
-  border: 1px solid var(--border-light);
+  border: 1px solid var(--color-border);
   overflow: hidden;
   animation: modalPop 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .config-modal-header {
   padding: 18px 24px;
-  background: linear-gradient(135deg, var(--teams-purple), #4F52B2);
+  background: var(--color-deep-navy);
   color: #FFFFFF;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  border-bottom: 1px solid rgba(231, 217, 191, 0.2);
 }
 
 .config-modal-header h3 {
@@ -635,11 +643,14 @@
   font-size: 20px;
   padding: 4px 8px;
   border-radius: 4px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
   transition: background 0.15s;
 }
 
 .config-close-btn:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.15);
 }
 
 .config-modal-body {
@@ -652,18 +663,18 @@
 }
 
 .config-code-block {
-  background: #201F24;
+  background: var(--color-deep-navy);
   color: #E6E6E6;
   border-radius: var(--radius-md);
   padding: 14px 16px;
   font-family: 'Consolas', 'Courier New', monospace;
   font-size: 12.5px;
   line-height: 1.5;
-  border: 1px solid #333238;
+  border: 1px solid rgba(231, 217, 191, 0.2);
 }
 
 .config-code-block .code-highlight {
-  color: #36D1DC;
+  color: var(--color-gold);
 }
 
 .config-code-block .code-comment {
@@ -676,11 +687,11 @@
   flex-direction: column;
   gap: 8px;
   font-size: 13.5px;
-  color: var(--text-primary);
+  color: var(--color-primary-text);
 }
 
 .config-steps-list li strong {
-  color: var(--teams-purple);
+  color: var(--color-primary-navy);
 }
 
 @keyframes modalPop {
@@ -714,7 +725,6 @@
     padding: 10px 16px 14px 16px;
   }
 }
-
 
 /* Auth Lock Badge & Status */
 .welcome-badge-locked {
@@ -756,7 +766,7 @@
 }
 
 .locked-prompt-pill:hover {
-  border-color: var(--teams-purple) !important;
+  border-color: var(--color-gold) !important;
 }
 
 /* Chat Authentication Gate Screen */
@@ -766,7 +776,7 @@
   align-items: center;
   justify-content: center;
   padding: 24px;
-  background: linear-gradient(180deg, #F9F8FD 0%, #FFFFFF 100%);
+  background: var(--color-sand);
   width: 100%;
   height: 100%;
 }
@@ -774,11 +784,11 @@
 .chat-auth-gate-card {
   max-width: 540px;
   width: 100%;
-  background: #FFFFFF;
-  border: 1px solid var(--border-light, #EDEBE9);
+  background: var(--color-warm-white);
+  border: 1px solid var(--color-border);
   border-radius: 16px;
   padding: 36px 32px;
-  box-shadow: 0 10px 30px rgba(91, 95, 199, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 10px 30px rgba(15, 39, 66, 0.08), 0 2px 8px rgba(15, 39, 66, 0.04);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -790,19 +800,20 @@
   width: 64px;
   height: 64px;
   border-radius: 18px;
-  background: linear-gradient(135deg, rgba(91, 95, 199, 0.12), rgba(54, 209, 220, 0.15));
-  color: var(--teams-purple, #5B5FC7);
+  background: var(--navy-light);
+  border: 1px solid var(--color-border);
+  color: var(--color-primary-navy);
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 20px;
-  box-shadow: 0 4px 12px rgba(91, 95, 199, 0.15);
+  box-shadow: 0 2px 8px rgba(15, 39, 66, 0.1);
 }
 
 .chat-auth-gate-card h3 {
   font-size: 20px;
   font-weight: 700;
-  color: var(--text-primary, #242424);
+  color: var(--color-primary-text);
   margin-bottom: 10px;
   letter-spacing: -0.2px;
 }
@@ -810,7 +821,7 @@
 .chat-auth-gate-card p {
   font-size: 14px;
   line-height: 1.6;
-  color: var(--text-secondary, #616161);
+  color: var(--color-secondary-text);
   margin-bottom: 24px;
   max-width: 440px;
 }
@@ -828,7 +839,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: var(--teams-purple, #5B5FC7);
+  background: var(--color-primary-navy);
   color: #FFFFFF;
   font-weight: 600;
   font-size: 14px;
@@ -837,13 +848,13 @@
   border: none;
   cursor: pointer;
   transition: all 0.2s ease;
-  box-shadow: 0 2px 6px rgba(91, 95, 199, 0.3);
+  box-shadow: 0 2px 6px rgba(15, 39, 66, 0.2);
 }
 
 .chat-auth-gate-btn-primary:hover {
-  background: var(--teams-purple-dark, #4f52b2);
+  background: var(--navy-hover);
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(91, 95, 199, 0.4);
+  box-shadow: 0 4px 12px rgba(15, 39, 66, 0.3);
 }
 
 .chat-auth-gate-btn-secondary {
@@ -851,19 +862,19 @@
   align-items: center;
   justify-content: center;
   background: transparent;
-  color: var(--teams-purple, #5B5FC7);
+  color: var(--color-primary-navy);
   font-weight: 600;
   font-size: 14px;
   padding: 10px 20px;
   border-radius: 8px;
-  border: 1px solid var(--border-light, #EDEBE9);
+  border: 1px solid var(--color-border);
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .chat-auth-gate-btn-secondary:hover {
-  background: rgba(91, 95, 199, 0.06);
-  border-color: var(--teams-purple, #5B5FC7);
+  background: var(--navy-light);
+  border-color: var(--color-primary-navy);
 }
 
 .chat-auth-gate-features {
@@ -871,8 +882,8 @@
   flex-direction: column;
   gap: 10px;
   width: 100%;
-  background: #F8F7FC;
-  border: 1px solid #ECE9F7;
+  background: var(--color-sand);
+  border: 1px solid var(--color-border);
   border-radius: 10px;
   padding: 14px 16px;
   margin-bottom: 20px;
@@ -884,15 +895,14 @@
   align-items: center;
   gap: 10px;
   font-size: 13px;
-  color: var(--text-primary, #323130);
+  color: var(--color-primary-text);
   font-weight: 500;
 }
 
 .chat-auth-gate-footer {
   font-size: 11.5px;
-  color: #8A8886;
+  color: var(--color-secondary-text);
 }
-
 
 /* Clerk Synced Strip Above Chat */
 .chat-clerk-synced-strip {
@@ -900,10 +910,10 @@
   align-items: center;
   justify-content: space-between;
   padding: 8px 24px;
-  background: #F4FBF7;
-  border-bottom: 1px solid #D2EEDC;
+  background: #EAF4EE;
+  border-bottom: 1px solid #B5DFCA;
   font-size: 12.5px;
-  color: #107C41;
+  color: var(--color-success-green);
   flex-shrink: 0;
   gap: 12px;
   flex-wrap: wrap;
@@ -916,15 +926,15 @@
 }
 
 .clerk-synced-badge strong {
-  color: #0E6836;
+  color: #176040;
 }
 
 .clerk-synced-badge code {
-  background: rgba(16, 124, 65, 0.1);
+  background: rgba(33, 132, 91, 0.12);
   padding: 1px 6px;
   border-radius: 4px;
   font-size: 11.5px;
-  color: #0E6836;
+  color: #176040;
 }
 
 .clerk-synced-actions {
@@ -936,7 +946,7 @@
 .btn-autofill-ticket-prompt {
   display: inline-flex;
   align-items: center;
-  background: #107C41;
+  background: var(--color-success-green);
   color: #FFFFFF;
   border: none;
   font-size: 12px;
@@ -945,20 +955,20 @@
   border-radius: 6px;
   cursor: pointer;
   transition: all 0.15s ease;
-  box-shadow: 0 1px 3px rgba(16, 124, 65, 0.2);
+  box-shadow: 0 1px 3px rgba(33, 132, 91, 0.25);
 }
 
 .btn-autofill-ticket-prompt:hover {
-  background: #0E6836;
+  background: #1B6E4C;
   transform: translateY(-1px);
 }
 
 .btn-open-ticket-modal-quick {
   display: inline-flex;
   align-items: center;
-  background: #FFFFFF;
-  color: #107C41;
-  border: 1px solid #A3E0BA;
+  background: var(--color-warm-white);
+  color: var(--color-success-green);
+  border: 1px solid #B5DFCA;
   font-size: 12px;
   font-weight: 600;
   padding: 4px 10px;
@@ -974,7 +984,7 @@
 .chat-btn-raise-ticket {
   display: inline-flex;
   align-items: center;
-  background: var(--teams-purple, #5B5FC7);
+  background: var(--color-primary-navy);
   color: #FFFFFF;
   border: none;
   font-size: 12px;
@@ -983,10 +993,10 @@
   border-radius: 6px;
   cursor: pointer;
   transition: all 0.15s ease;
-  box-shadow: 0 1px 3px rgba(91, 95, 199, 0.25);
+  box-shadow: 0 1px 3px rgba(15, 39, 66, 0.25);
 }
 
 .chat-btn-raise-ticket:hover {
-  background: var(--teams-purple-dark, #4f52b2);
+  background: var(--navy-hover);
   transform: translateY(-1px);
 }
