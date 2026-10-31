@@ -1,0 +1,363 @@
+/* ==========================================================================
+   CONTACT HR & IT - STYLESHEET
+   Microsoft Teams / Fluent UI Design Consistency
+   ========================================================================== */
+
+.contact-page-container {
+  display: flex;
+  flex-direction: column;
+  padding: 24px 32px 48px 32px;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  gap: 28px;
+}
+
+/* Hero Header */
+.contact-hero-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.contact-hero-content h2 {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+  letter-spacing: -0.2px;
+}
+
+.contact-hero-content p {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  max-width: 720px;
+}
+
+.btn-raise-ticket-contact {
+  transition: all 0.15s ease;
+}
+
+.btn-raise-ticket-contact:hover {
+  background: var(--teams-purple-hover) !important;
+  box-shadow: 0 2px 8px rgba(91, 95, 199, 0.3) !important;
+}
+
+/* ==========================================================================
+   DEPARTMENT CONTACT CARDS GRID
+   ========================================================================== */
+
+.department-section-header {
+  margin-bottom: 18px;
+}
+
+.department-section-header h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.department-section-subtext {
+  font-size: 13.5px;
+  color: var(--text-secondary);
+}
+
+.department-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.department-contact-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.department-contact-card:hover {
+  box-shadow: var(--shadow-md);
+  border-color: var(--border-subtle);
+}
+
+.department-contact-card.hr-card {
+  border-top: 4px solid var(--teams-purple);
+}
+
+.department-contact-card.it-card {
+  border-top: 4px solid var(--teams-blue);
+}
+
+.card-header-block {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.card-icon-badge {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 22px;
+}
+
+.hr-card .card-icon-badge {
+  background: var(--teams-purple-light);
+  color: var(--teams-purple);
+}
+
+.it-card .card-icon-badge {
+  background: var(--teams-blue-light);
+  color: var(--teams-blue);
+}
+
+.card-title-group h3 {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.card-dept-tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 2px 7px;
+  border-radius: var(--radius-xs);
+  margin-bottom: 4px;
+}
+
+.hr-card .card-dept-tag {
+  background: var(--teams-purple-soft);
+  color: var(--teams-purple);
+}
+
+.it-card .card-dept-tag {
+  background: #E1DFDD;
+  color: #004E8C;
+}
+
+/* Representative Badge */
+.card-rep-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  padding: 6px 12px;
+  margin-bottom: 12px;
+  font-size: 13px;
+  color: var(--text-primary);
+  width: fit-content;
+}
+
+.card-rep-title {
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/* Purpose Block */
+.card-purpose-block {
+  background: #FAF9F8;
+  border-left: 3px solid var(--teams-purple);
+  padding: 8px 12px;
+  border-radius: 0 var(--radius-xs) var(--radius-xs) 0;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--text-secondary);
+  margin-bottom: 14px;
+}
+
+.it-card .card-purpose-block {
+  border-left-color: var(--teams-blue);
+}
+
+.card-description {
+  font-size: 13.5px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+/* Contact Methods List */
+.contact-methods-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.contact-method-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 14px;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  transition: background 0.15s ease;
+}
+
+.method-label-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.method-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #FFFFFF;
+  border: 1px solid var(--border-light);
+  color: var(--text-secondary);
+  flex-shrink: 0;
+}
+
+.method-text-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.method-type-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.method-value-display {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* Unconfigured contact box */
+.contact-unconfigured-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #F3F2F1;
+  border: 1px dashed #C8C6C4;
+  color: #605E5C;
+  padding: 6px 12px;
+  border-radius: var(--radius-xs);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/* Active contact buttons */
+.btn-contact-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 12.5px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.hr-card .btn-contact-action {
+  background: var(--teams-purple);
+  color: #FFFFFF;
+}
+
+.hr-card .btn-contact-action:hover {
+  background: var(--teams-purple-hover);
+  box-shadow: 0 2px 6px rgba(91, 95, 199, 0.25);
+}
+
+.it-card .btn-contact-action {
+  background: var(--teams-blue);
+  color: #FFFFFF;
+}
+
+.it-card .btn-contact-action:hover {
+  background: #005A9E;
+  box-shadow: 0 2px 6px rgba(0, 120, 212, 0.25);
+}
+
+.btn-contact-action:focus-visible {
+  outline: 2px solid var(--teams-purple);
+  outline-offset: 2px;
+}
+
+/* Department Meta Footer */
+.department-card-footer {
+  padding-top: 14px;
+  border-top: 1px solid var(--border-light);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN (Tablets & Mobile)
+   ========================================================================== */
+
+@media (max-width: 900px) {
+  .department-cards-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 640px) {
+  .contact-page-container {
+    padding: 16px;
+    gap: 20px;
+  }
+
+  .department-contact-card {
+    padding: 18px 16px;
+  }
+
+  .contact-method-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .btn-contact-action {
+    width: 100%;
+    justify-content: center;
+  }
+}

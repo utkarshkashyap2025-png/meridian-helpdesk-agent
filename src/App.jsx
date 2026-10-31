@@ -6,6 +6,7 @@ import ChatPage from './pages/ChatPage';
 import TicketsPage from './pages/TicketsPage';
 import HRPoliciesPage from './pages/HRPoliciesPage';
 import ITSupportPage from './pages/ITSupportPage';
+import ContactPage from './pages/ContactPage';
 import RaiseTicketModal from './components/RaiseTicketModal';
 
 export default function App() {
@@ -125,6 +126,14 @@ export default function App() {
             <ITSupportPage
               onShowToast={showToast}
               onOpenRaiseTicket={handleOpenRaiseTicket}
+            />
+          )}
+
+          {activeTab === 'contact' && (
+            <ContactPage
+              onOpenRaiseTicket={handleOpenRaiseTicket}
+              onAskBot={handleAskBot}
+              onShowToast={showToast}
             />
           )}
         </main>

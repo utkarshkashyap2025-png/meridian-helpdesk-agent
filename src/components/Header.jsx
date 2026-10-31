@@ -19,7 +19,10 @@ const SEARCH_INDEX = [
     tab: 'hr-policies',
     category: p.categoryLabel || 'Policy'
   })),
-  ...IT_CATALOG_ITEMS
+  ...IT_CATALOG_ITEMS,
+  { title: 'Contact Human Resources (HR)', tab: 'contact', category: 'Contact & Escalation' },
+  { title: 'Contact IT Support Helpdesk', tab: 'contact', category: 'Contact & Escalation' },
+  { title: 'Urgent Human Assistance & Escalation', tab: 'contact', category: 'Contact & Escalation' }
 ];
 
 export default function Header({ 
@@ -126,7 +129,7 @@ export default function Header({
                     onClick={() => handleSelectResult(m)}
                   >
                     <div className="search-result-icon">
-                      {m.tab === 'hr-policies' ? '📜' : '💻'}
+                      {m.tab === 'hr-policies' ? '📜' : m.tab === 'contact' ? '📞' : '💻'}
                     </div>
                     <div className="search-result-meta">
                       <span className="search-result-title">{m.title}</span>

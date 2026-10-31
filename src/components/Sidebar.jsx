@@ -1,5 +1,5 @@
 import React from 'react';
-import { MessageSquare, Ticket, FileText, Wrench, HelpCircle } from 'lucide-react';
+import { MessageSquare, Ticket, FileText, Wrench, HelpCircle, PhoneCall } from 'lucide-react';
 import meridianLogo from '../assets/meridian-logo.svg';
 
 export default function Sidebar({ activeTab, onSelectTab, isOpen, onCloseMobile, onOpenConfig }) {
@@ -30,6 +30,13 @@ export default function Sidebar({ activeTab, onSelectTab, isOpen, onCloseMobile,
       label: 'IT Support',
       tooltip: 'IT Support',
       icon: Wrench,
+      badge: null
+    },
+    {
+      id: 'contact',
+      label: 'Contact HR & IT',
+      tooltip: 'Emergency & Urgent Human Contact',
+      icon: PhoneCall,
       badge: null
     }
   ];
@@ -77,7 +84,7 @@ export default function Sidebar({ activeTab, onSelectTab, isOpen, onCloseMobile,
                       </span>
                     )}
                   </div>
-                  <span className="nav-label-text">{item.label}</span>
+                  <span className="nav-label nav-label-text">{item.label}</span>
                 </button>
               </li>
             );
